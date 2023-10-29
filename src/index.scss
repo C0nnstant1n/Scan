@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+header,
+footer {
+  min-width: 100vw;
+  max-width: 1440px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  main {
+    height: 100%;
+  }
+}
+.logo {
+  height: 93px;
+  width: 141px;
+  .logo-img {
+    height: 93px;
+  }
+}
