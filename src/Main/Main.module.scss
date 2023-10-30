@@ -1,0 +1,42 @@
+@import "../vars.scss";
+.top_container {
+  margin: 2rem 3.75rem;
+  display: flex;
+  max-width: 82.5rem;
+  height: 38.75rem;
+  color: $main-color-2;
+  .heading {
+    width: 46.4375rem;
+    h1 {
+      font-family: Ferry;
+      font-size: 3.75rem;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      letter-spacing: 0.0375rem;
+    }
+    p {
+      margin-top: 2rem;
+      width: 33.375rem;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      letter-spacing: 0.0125rem;
+    }
+    button {
+      margin-top: 4.37rem;
+      width: 20.9375rem;
+      height: 3.6875rem;
+      flex-shrink: 0;
+      border-radius: 0.3125rem;
+      background: $additional-color-3;
+    }
+  }
+  .back_img {
+    z-index: -1;
+    margin-left: -4rem;
+    width: 39.3125rem;
+    height: 37.0625rem;
+  }
+}

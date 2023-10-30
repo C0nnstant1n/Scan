@@ -1,5 +1,33 @@
 @import "../vars.scss";
 footer {
-  height: 137px;
+  color: $main-color-3;
+  min-width: 100vw;
+  max-width: 90rem;
+  height: 8.5625rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+  grid-gap: 1vw;
   background-color: $main-color-1;
+  grid-template-areas: "logo space-1 space-2 space-3 contacts";
+  // justify-items: center;
+  align-items: center;
+  .logo {
+    grid-area: logo;
+    width: 141px;
+    margin-left: 3.75rem;
+    .logo_img {
+      height: 130px;
+    }
+  }
+  .contact {
+    margin-right: 2.81rem;
+    text-align: end;
+    grid-area: 1 / 4 / 1 /6;
+    .contacts {
+      font-size: 0.875rem;
+    }
+    .copyright {
+      font-size: 0.75rem;
+    }
+  }
 }

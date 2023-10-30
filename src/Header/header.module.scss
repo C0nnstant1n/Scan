@@ -1,6 +1,66 @@
 @import "../vars.scss";
 
 header {
+  min-width: 100vw;
+  max-width: 90rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+  grid-gap: 1vw;
   background-color: $main-color-3;
   height: 93px;
+
+  grid-template-areas: "logo space navbar account-info account";
+  align-items: center;
+
+  color: $main-color-2;
+  font-size: 0.875rem;
+  font-weight: 400;
+
+  .logo {
+    grid-area: logo;
+    height: 93px;
+    width: 8.125rem;
+    margin-left: 3.75rem;
+    margin-top: -2rem;
+    .logo_img {
+      height: 130px;
+    }
+  }
+  .navbar {
+    grid-area: navbar;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    ul {
+      display: flex;
+      list-style: none;
+      li {
+        margin: 0 1rem;
+      }
+    }
+  }
+  .account_info {
+    grid-area: account-info;
+  }
+  .account {
+    grid-area: 1 / 4 / 1 /6;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 3.75rem;
+
+    img {
+      width: 0.125rem;
+      height: 1.625rem;
+      padding: 0 1rem;
+    }
+
+    button {
+      font-weight: 500;
+      width: 4.0625rem;
+      height: 1.625rem;
+      border-radius: 0.3125rem;
+      background: $additional-color-1;
+    }
+  }
 }

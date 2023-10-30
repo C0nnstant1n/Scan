@@ -1,20 +1,18 @@
 * {
   margin: 0;
   padding: 0;
+  border: none;
+}
+
+@font-face {
+  src: url(./assets/fonts/ferry_black.otf);
+  font-family: "ferry";
 }
 
 html,
 body {
   height: 100%;
-}
-
-header,
-footer {
-  min-width: 100vw;
-  max-width: 1440px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-family: Inter;
 }
 
 .root {
@@ -24,12 +22,5 @@ footer {
   height: 100%;
   main {
     height: 100%;
-  }
-}
-.logo {
-  height: 93px;
-  width: 141px;
-  .logo-img {
-    height: 93px;
   }
 }

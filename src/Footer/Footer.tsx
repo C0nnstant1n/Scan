@@ -5,17 +5,19 @@ export default function Footer() {
   return (
     <>
       <footer className={styles.footer}>
-        <div className='logo'>
-          <img className='logo-img' alt='Logo' src={logo} />
+        <div className={styles.logo}>
+          <img className={styles.logo_img} alt='Logo' src={logo} />
         </div>
-        <div className='label'>
-          <p className='element'>
+        <div className={styles.contact}>
+          <p className={styles.contacts}>
             г. Москва, Цветной б-р, 40
             <br />
             +7 495 771 21 11
             <br />
             info@skan.ru
           </p>
+          <br />
+          <p className={styles.copyright}>Copyright. 2022</p>
         </div>
       </footer>
     </>
