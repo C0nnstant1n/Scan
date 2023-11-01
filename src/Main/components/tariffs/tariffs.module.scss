@@ -1,0 +1,105 @@
+@import "../../../vars.scss";
+.tariffs {
+  margin-top: 1rem;
+  margin-bottom: 7rem;
+  height: 41.5rem;
+  display: flex;
+  flex-direction: column;
+  h2 {
+    font-family: Ferry;
+    font-size: 2.8125rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: 0.02813rem;
+  }
+  .cards {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    h2 {
+      font-family: Inter;
+      font-size: 1.875rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0.01875rem;
+    }
+    p {
+      font-family: Inter;
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      letter-spacing: 0.01125rem;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      width: 25.9375rem;
+      height: 33.75rem;
+      border-radius: 0.625rem;
+      background: $main-color-3;
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+      .heading {
+        padding-top: 1.88rem;
+        padding-left: 1.88rem;
+        height: 8.25rem;
+        border-radius: 0.625rem 0.625rem 0rem 0rem;
+        background: $additional-color-2;
+        img {
+          width: 5.76525rem;
+          height: 5.19656rem;
+          padding-left: 17.4rem;
+          margin-top: -3rem;
+        }
+        p {
+          margin-top: -1.4rem;
+        }
+      }
+      .is_current {
+        width: 8.375rem;
+        height: 1.5rem;
+        margin-top: 0.75rem;
+        margin-right: 1rem;
+
+        border-radius: 0.625rem;
+        background: #3ba5e0;
+        align-self: self-end;
+        text-align: center;
+        color: $main-color-3;
+        p {
+          font-size: 0.875rem;
+          padding-top: 0.175rem;
+        }
+      }
+      .price {
+        padding-left: 1.88rem;
+        span {
+          font-size: 1.5625rem;
+          opacity: 0.5;
+          text-decoration-line: line-through;
+        }
+      }
+      .terms {
+        padding-top: 3.7rem;
+        padding-left: 1.88rem;
+        li {
+          padding-top: 0.63rem;
+          list-style-type: none;
+          height: 1.25rem;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          img {
+            padding-right: 0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+          }
+        }
+      }
+    }
+  }
+}

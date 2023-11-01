@@ -1,9 +1,8 @@
 @import "../vars.scss";
 footer {
   color: $main-color-3;
-  min-width: 100vw;
-  max-width: 90rem;
-  height: 8.5625rem;
+  width: 90rem;
+
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
   grid-gap: 1vw;
@@ -11,13 +10,13 @@ footer {
   grid-template-areas: "logo space-1 space-2 space-3 contacts";
   // justify-items: center;
   align-items: center;
+
   .logo {
     grid-area: logo;
-    width: 141px;
+    height: 8.8125rem;
+    width: 8.8125rem;
     margin-left: 3.75rem;
-    .logo_img {
-      height: 130px;
-    }
+    background: url("../assets/logo-gray.svg"), lightgray 50% / cover no-repeat;
   }
   .contact {
     margin-right: 2.81rem;

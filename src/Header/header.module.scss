@@ -1,30 +1,34 @@
 @import "../vars.scss";
 
 header {
-  min-width: 100vw;
-  max-width: 90rem;
+  width: 90rem;
+  height: 5.8125rem;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
   grid-gap: 1vw;
   background-color: $main-color-3;
-  height: 93px;
-
   grid-template-areas: "logo space navbar account-info account";
   align-items: center;
-
   color: $main-color-2;
   font-size: 0.875rem;
   font-weight: 400;
+
+  %link {
+    a {
+      color: $main-color-2;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 
   .logo {
     grid-area: logo;
     height: 93px;
     width: 8.125rem;
     margin-left: 3.75rem;
-    margin-top: -2rem;
-    .logo_img {
-      height: 130px;
-    }
+    background: url("../assets/logo.svg"), lightgray 50% / cover no-repeat;
   }
   .navbar {
     grid-area: navbar;
@@ -36,6 +40,7 @@ header {
       list-style: none;
       li {
         margin: 0 1rem;
+        @extend %link;
       }
     }
   }
@@ -48,7 +53,7 @@ header {
     justify-content: flex-end;
     align-items: center;
     margin-right: 3.75rem;
-
+    @extend %link;
     img {
       width: 0.125rem;
       height: 1.625rem;

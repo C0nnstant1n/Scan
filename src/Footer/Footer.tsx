@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       <footer className={styles.footer}>
         <div className={styles.logo}>
-          <img className={styles.logo_img} alt='Logo' src={logo} />
+          {/* <img className={styles.logo_img} alt='Logo' src={logo} /> */}
         </div>
         <div className={styles.contact}>
           <p className={styles.contacts}>

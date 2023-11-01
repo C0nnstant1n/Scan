@@ -1,11 +1,11 @@
 @import "../vars.scss";
 .top_container {
-  margin: 2rem 3.75rem;
+  margin: 2rem 0;
   display: flex;
-  max-width: 82.5rem;
   height: 38.75rem;
   color: $main-color-2;
   .heading {
+    z-index: 1;
     width: 46.4375rem;
     h1 {
       font-family: Ferry;
@@ -34,9 +34,14 @@
     }
   }
   .back_img {
-    z-index: -1;
+    z-index: 0;
     margin-left: -4rem;
+    margin-top: 1.5rem;
     width: 39.3125rem;
     height: 37.0625rem;
   }
+}
+.middle_img {
+  margin-top: 4rem;
+  height: 40rem;
 }

@@ -7,21 +7,27 @@ export default function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.logo}>
-          <img className={styles.logo_img} alt='Logo' src={logo} />
+          {/* <img className={styles.logo_img} alt='Logo' src={logo} /> */}
         </div>
 
         <div className={styles.navbar}>
           <nav>
             <ul>
-              <li>Главная</li>
-              <li>Тарифы</li>
-              <li>FAQ</li>
+              <li>
+                <a href='#'>Главная</a>
+              </li>
+              <li>
+                <a href='#'>Тарифы</a>
+              </li>
+              <li>
+                <a href='#'>FAQ</a>
+              </li>
             </ul>
           </nav>
         </div>
         <div className={styles.account_info}></div>
         <div className={styles.account}>
-          <p>Зарегистрироваться</p>
+          <a href='#'>Зарегистрироваться</a>
           <img src={separator} alt='|' />
           <button>Войти</button>
         </div>

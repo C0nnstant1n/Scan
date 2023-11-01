@@ -1,5 +1,8 @@
 import styles from "./Main.module.scss";
 import topImage from "../assets/2398.png";
+import Carousel from "./components/carousel/carousel";
+import middleImage from "../assets/Group 14.svg";
+import Tariffs from "./components/tariffs/tariffs";
 
 export default function Main() {
   return (
@@ -17,6 +20,11 @@ export default function Main() {
           <img src={topImage} alt='' />
         </div>
       </div>
+      <Carousel />
+      <div className={styles.middle_img}>
+        <img src={middleImage} alt='image' />
+      </div>
+      <Tariffs />
     </main>
   );
 }
