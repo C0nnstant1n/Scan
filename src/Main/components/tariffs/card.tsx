@@ -1,40 +1,65 @@
-import style from "./tariffs.module.scss";
+import styles from "./tariffs.module.scss";
 import li_icon from "../../../assets/icons8-галочка-96 1.svg";
-import icon from "../../../assets/Beginner.svg";
-export default function Card() {
+import { ITariff } from "./tariffs";
+
+interface IProps {
+  rate: ITariff;
+}
+
+export default function Card({ rate }: IProps) {
+  let type = "";
+  switch (rate.name) {
+    case "Beginner":
+      type = styles.beginner;
+      break;
+
+    case "Pro":
+      type = styles.pro;
+      break;
+
+    case "Business":
+      type = styles.business;
+      break;
+
+    default:
+      type = styles.beginner;
+      break;
+  }
+
   return (
-    <div className={style.card}>
-      <div className={style.heading}>
-        <h2>Название</h2>
-        <img src={icon}></img>
-        <p>Для небольшого исследования</p>
+    <div className={styles.card}>
+      <div className={styles.heading + " " + type}>
+        <h2>{rate.name}</h2>
+        <img src={rate.icon}></img>
+        <p>{rate.description}</p>
       </div>
-      <div className={style.is_current}>
-        <p>Текущий тариф</p>
-      </div>
-      <div className={style.price}>
+
+      {rate.isCurrent ? (
+        <div className={styles.is_current}>
+          <p>Текущий тариф</p>
+        </div>
+      ) : (
+        <div className={styles.is_current_hide}></div>
+      )}
+
+      <div className={styles.price}>
         <h2>
-          700 p <span>1200 p</span>
+          {rate.price.discount} <span>{rate.price.cost}</span>
         </h2>
         <br />
-        <p>или 150 ₽/мес. при рассрочке на 24 мес.</p>
+        <br />
+        <p>{rate.price.installment} </p>
       </div>
-      <div className={style.terms}>
+      <div className={styles.terms}>
         <ul>
           {" "}
           <b>В тариф входит:</b>
-          <li>
-            <img src={li_icon}></img>
-            Безлимитная история запросов
-          </li>
-          <li>
-            <img src={li_icon}></img>
-            Безопасная сделка
-          </li>
-          <li>
-            <img src={li_icon}></img>
-            Поддержка 24/7
-          </li>
+          {rate.conditions.map((condition) => (
+            <li key={condition}>
+              <img src={li_icon}></img>
+              {condition}
+            </li>
+          ))}
         </ul>
       </div>
     </div>

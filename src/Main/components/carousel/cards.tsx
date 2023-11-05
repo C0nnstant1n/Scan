@@ -1,4 +1,3 @@
-import clock from "../../../assets/clock-ico.svg";
 import style from "./carousel.module.scss";
 import { IcarouselList } from "./carousel";
 
@@ -9,7 +8,7 @@ interface Props {
 export default function Card({ carouselList }: Props) {
   return (
     <div className={style.card}>
-      <img src={carouselList.img} alt='clock' />
+      <img src={carouselList.img} alt='card-icon' />
       <p>{carouselList.text}</p>
     </div>
   );

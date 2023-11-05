@@ -1,4 +1,16 @@
 @import "../../../vars.scss";
+
+.beginner {
+  background: $additional-color-2;
+}
+.pro {
+  background: $additional-color-1;
+}
+.business {
+  background: $main-color-2;
+  color: $main-color-3;
+}
+
 .tariffs {
   margin-top: 1rem;
   margin-bottom: 7rem;
@@ -48,56 +60,65 @@
         padding-left: 1.88rem;
         height: 8.25rem;
         border-radius: 0.625rem 0.625rem 0rem 0rem;
-        background: $additional-color-2;
-        img {
-          width: 5.76525rem;
-          height: 5.19656rem;
-          padding-left: 17.4rem;
-          margin-top: -3rem;
-        }
-        p {
-          margin-top: -1.4rem;
-        }
       }
-      .is_current {
-        width: 8.375rem;
-        height: 1.5rem;
-        margin-top: 0.75rem;
-        margin-right: 1rem;
+      img {
+        width: 5.76525rem;
+        height: 5.19656rem;
+        padding-left: 17.4rem;
+        margin-top: -3rem;
+      }
+      p {
+        margin-top: -1.4rem;
+      }
+    }
+    .is_current {
+      width: 8.375rem;
+      height: 1.5rem;
+      margin-top: 0.75rem;
+      margin-right: 1rem;
 
-        border-radius: 0.625rem;
-        background: #3ba5e0;
-        align-self: self-end;
-        text-align: center;
-        color: $main-color-3;
-        p {
-          font-size: 0.875rem;
-          padding-top: 0.175rem;
-        }
+      border-radius: 0.625rem;
+      background: #3ba5e0;
+      align-self: self-end;
+      text-align: center;
+      color: $main-color-3;
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+        padding-top: 0.175rem;
       }
-      .price {
-        padding-left: 1.88rem;
-        span {
-          font-size: 1.5625rem;
-          opacity: 0.5;
-          text-decoration-line: line-through;
-        }
+    }
+    .is_current_hide {
+      width: 8.375rem;
+      height: 1.5rem;
+      margin-top: 0.75rem;
+      margin-right: 1rem;
+    }
+    .price {
+      height: 5rem;
+      padding-left: 1.88rem;
+      span {
+        font-size: 1.5625rem;
+        opacity: 0.5;
+        text-decoration-line: line-through;
       }
-      .terms {
-        padding-top: 3.7rem;
-        padding-left: 1.88rem;
-        li {
-          padding-top: 0.63rem;
-          list-style-type: none;
+    }
+    .terms {
+      padding-top: 3.7rem;
+      padding-left: 1.88rem;
+      li {
+        padding-top: 0.63rem;
+        list-style-type: none;
+        height: 1.25rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        img {
+          margin: 0;
+          padding-left: 0;
+          padding-right: 0.5rem;
+          width: 1.25rem;
           height: 1.25rem;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          img {
-            padding-right: 0.5rem;
-            width: 1.25rem;
-            height: 1.25rem;
-          }
         }
       }
     }

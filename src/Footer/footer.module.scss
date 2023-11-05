@@ -1,7 +1,7 @@
 @import "../vars.scss";
 footer {
   color: $main-color-3;
-  width: 90rem;
+  min-width: 90rem;
 
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;

@@ -1,5 +1,4 @@
 import styles from "./header.module.scss";
-import logo from "../assets/logo.png";
 import separator from "../assets/separator.svg";
 
 export default function Header() {

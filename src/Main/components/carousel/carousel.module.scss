@@ -19,6 +19,7 @@
     .button_left {
       width: 2.5rem;
       height: 2.5rem;
+      margin-right: -1rem;
     }
     .card {
       width: 25rem;
@@ -45,6 +46,11 @@
     .button_right {
       width: 2.5rem;
       height: 2.5rem;
+      margin-left: -1rem;
+
+      img {
+        rotate: 180deg;
+      }
     }
   }
 }

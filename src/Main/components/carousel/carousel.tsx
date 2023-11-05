@@ -1,3 +1,4 @@
+import * as React from "react";
 import Card from "./cards";
 import styles from "./carousel.module.scss";
 import icon from "../../../assets/icons8-шеврон-вправо-90 1.svg";
@@ -25,22 +26,66 @@ const carouselList: IcarouselList[] = [
     img: `${defense}`,
     text: "Защита конфеденциальных сведений, не подлежащих разглашению по федеральному законодательству",
   },
+  {
+    img: `${defense}`,
+    text: "1",
+  },
+  {
+    img: `${defense}`,
+    text: "2",
+  },
+  {
+    img: `${defense}`,
+    text: "3",
+  },
 ];
 
-console.log(carouselList.length);
+let list: number[] = [];
+for (let i in carouselList) {
+  list.push(Number(i));
+}
 
 export default function Carousel() {
+  const [indexes, setIndexes] = React.useState(list);
+
+  function prevCard() {
+    const newList: number[] = [];
+    indexes.map((value, index) => {
+      value--;
+      value < 0
+        ? (newList[index] = carouselList.length - 1)
+        : (newList[index] = value);
+    });
+    setIndexes(newList);
+    // console.log(newList);
+  }
+
+  function nextCard() {
+    const newList: number[] = [];
+    indexes.map((value, index) => {
+      value++;
+      value > indexes.length - 1
+        ? (newList[index] = 0)
+        : (newList[index] = value);
+    });
+    setIndexes(newList);
+    // console.log(newList);
+  }
   return (
     <div className={styles.carousel}>
       <h2>Почему именно мы</h2>
       <div className={styles.cards}>
-        <button className={styles.button_left}>
-          <img src={icon} alt='' />
+        <button className={styles.button_left} onClick={prevCard}>
+          <img src={icon} alt='prev' />
         </button>
-        <Card carouselList={carouselList[0]} />
-        <Card carouselList={carouselList[1]} />
-        <Card carouselList={carouselList[2]} />
-        <button className={styles.button_right}></button>
+
+        <Card carouselList={carouselList[indexes[0]]} />
+        <Card carouselList={carouselList[indexes[1]]} />
+        <Card carouselList={carouselList[indexes[2]]} />
+
+        <button className={styles.button_right} onClick={nextCard}>
+          <img src={icon} alt='next' />
+        </button>
       </div>
     </div>
   );
