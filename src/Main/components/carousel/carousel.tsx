@@ -1,44 +1,8 @@
-import * as React from "react";
+import { useState } from "react";
 import Card from "./cards";
 import styles from "./carousel.module.scss";
 import icon from "../../../assets/icons8-шеврон-вправо-90 1.svg";
-import clock from "../../../assets/clock-ico.svg";
-import search from "../../../assets/search-ico.svg";
-import defense from "../../../assets/defense-ico.svg";
-
-export interface IcarouselList {
-  img: string;
-  text: string;
-}
-
-const carouselList: IcarouselList[] = [
-  {
-    img: `${clock}`,
-    text: "Высокая и оперативная скорость обработки заявки",
-  },
-
-  {
-    img: `${search}`,
-    text: "Огромная комплексная база данных, обеспечивающая объективный ответ на запрос",
-  },
-
-  {
-    img: `${defense}`,
-    text: "Защита конфеденциальных сведений, не подлежащих разглашению по федеральному законодательству",
-  },
-  {
-    img: `${defense}`,
-    text: "1",
-  },
-  {
-    img: `${defense}`,
-    text: "2",
-  },
-  {
-    img: `${defense}`,
-    text: "3",
-  },
-];
+import carouselList from "./ListCards";
 
 let list: number[] = [];
 for (let i in carouselList) {
@@ -46,7 +10,7 @@ for (let i in carouselList) {
 }
 
 export default function Carousel() {
-  const [indexes, setIndexes] = React.useState(list);
+  const [indexes, setIndexes] = useState(list);
 
   function prevCard() {
     const newList: number[] = [];

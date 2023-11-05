@@ -66,6 +66,10 @@ header {
       height: 1.625rem;
       border-radius: 0.3125rem;
       background: $additional-color-1;
+      cursor: pointer;
+      &:hover {
+        background-color: #c1f0ef;
+      }
     }
   }
 }

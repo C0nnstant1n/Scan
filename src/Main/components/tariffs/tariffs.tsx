@@ -22,7 +22,7 @@ const tariffs: ITariff[] = [
     name: "Beginner",
     icon: `${begin_ico}`,
     description: "Для небольшого исследования",
-    isCurrent: true,
+    isCurrent: false,
     price: {
       cost: "1 200 ₽",
       discount: "799 ₽",
@@ -38,7 +38,7 @@ const tariffs: ITariff[] = [
     name: "Pro",
     icon: `${pro_ico}`,
     description: "Для HR и фрилансеров",
-    isCurrent: false,
+    isCurrent: true,
     price: {
       cost: "2 600 ₽",
       discount: "1 299 ₽",

@@ -47,7 +47,6 @@ export default function Card({ rate }: IProps) {
           {rate.price.discount} <span>{rate.price.cost}</span>
         </h2>
         <br />
-        <br />
         <p>{rate.price.installment} </p>
       </div>
       <div className={styles.terms}>
@@ -62,6 +61,11 @@ export default function Card({ rate }: IProps) {
           ))}
         </ul>
       </div>
+      {rate.isCurrent ? (
+        <button>Перейти в личный кабинет</button>
+      ) : (
+        <button>Подробнее</button>
+      )}
     </div>
   );
 }

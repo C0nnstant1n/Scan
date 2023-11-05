@@ -1,5 +1,5 @@
 import style from "./carousel.module.scss";
-import { IcarouselList } from "./carousel";
+import { IcarouselList } from "./ListCards";
 
 interface Props {
   carouselList: IcarouselList;
