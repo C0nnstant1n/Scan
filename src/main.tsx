@@ -4,11 +4,27 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Main from "./Main/Main";
 import "./index.scss";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./error-page";
+import Signin from "./signin/signin";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Main />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/signin",
+    element: <Signin />,
+    errorElement: <ErrorPage />,
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Header />
-    <Main />
+    <RouterProvider router={router} />
     <Footer />
   </React.StrictMode>
 );

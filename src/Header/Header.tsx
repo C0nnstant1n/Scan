@@ -13,7 +13,7 @@ export default function Header() {
           <nav>
             <ul>
               <li>
-                <a href='#'>Главная</a>
+                <a href='/'>Главная</a>
               </li>
               <li>
                 <a href='#'>Тарифы</a>
@@ -28,7 +28,9 @@ export default function Header() {
         <div className={styles.account}>
           <a href='#'>Зарегистрироваться</a>
           <img src={separator} alt='|' />
-          <button>Войти</button>
+          <a className={styles.link_button} href='/signin'>
+            Войти
+          </a>
         </div>
       </header>
     </>
