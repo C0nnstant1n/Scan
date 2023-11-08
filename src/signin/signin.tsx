@@ -1,4 +1,10 @@
-import { Form, redirect } from "react-router-dom";
+import {
+  Form,
+  redirect,
+  useActionData,
+  useLocation,
+  useNavigation,
+} from "react-router-dom";
 import charactersImg from "../assets/Characters.svg";
 import styles from "./signin.module.scss";
 import lock from "../assets/lock.svg";
@@ -7,12 +13,16 @@ import facebook from "../assets/facebook_button.svg";
 import yandex from "../assets/yandex_button.svg";
 import { useState } from "react";
 import loginApi from "../api/request";
+import type { LoaderFunctionArgs } from "react-router-dom";
 
 export default function Signin() {
-  const sign = {
-    login: "",
-    password: "",
-  };
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  let from = params.get("form") || "/";
+
+  const navigation = useNavigation();
+  let isLogginIn = navigation.formData?.get("login") != null;
+  let actionData = useActionData() as { error: string } | undefined;
 
   const [loginCheck, setLoginCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
@@ -49,18 +59,8 @@ export default function Signin() {
             </li>
           </ul>
 
-          <Form
-            method='post'
-            onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              loginApi(formData).then((data) => {
-                if (data[0] === 200) {
-                  return redirect("/");
-                }
-              });
-            }}
-          >
+          <Form method='post' replace>
+            <input type='hidden' name='redirectTo' value={from} />
             <label htmlFor='login'>Логин или номер телефона</label>
             <input
               id='login'
@@ -84,8 +84,13 @@ export default function Signin() {
               disabled={!(passwordCheck && loginCheck)}
               type='submit'
             >
-              Войти
+              {isLogginIn ? "Вход..." : "Войти"}
             </button>
+            {actionData && actionData.error ? (
+              <div className={styles.error}>
+                <p style={{ color: "red" }}>{actionData.error}</p>
+              </div>
+            ) : null}
           </Form>
 
           <a href='#'>Восстановить пароль</a>
@@ -108,4 +113,23 @@ export default function Signin() {
       </div>
     </main>
   );
+}
+
+export async function loginAction({ request }: LoaderFunctionArgs) {
+  let formData = await request.formData();
+  // Sign in and redirect to the proper destination if successful.
+  try {
+    await loginApi(formData);
+  } catch (error) {
+    // Unused as of now but this is how you would handle invalid
+    // username/password combinations - just like validating the inputs
+    // above
+    console.log(error);
+    return {
+      error: err.response.data.message,
+    };
+  }
+
+  let redirectTo = formData.get("redirectTo") as string | null;
+  return redirect(redirectTo || "/");
 }

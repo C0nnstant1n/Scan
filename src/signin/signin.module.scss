@@ -1,4 +1,5 @@
 @import "../vars.scss";
+
 .authorization {
   width: 83rem;
   height: 100%;
@@ -97,12 +98,10 @@
       button:disabled {
         opacity: 0.4;
       }
-      .inactive_button {
-        background-color: #c7c7c7;
-        color: #666565;
-      }
-      .active_button {
-        background-color: $additional-color-3;
+      .error {
+        margin-top: 0.25rem;
+        font-size: 0, 75rem;
+        text-align: center;
       }
     }
   }
@@ -113,7 +112,7 @@
     letter-spacing: 0.0175rem;
   }
   .alternative_signin {
-    margin-top: 30px;
+    margin-top: 2rem;
     width: 23.6875rem;
     p {
       margin-left: 1rem;
