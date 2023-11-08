@@ -62,8 +62,9 @@ header {
 
     .link_button {
       font-weight: 500;
-      width: 4.0625rem;
-      height: 1.625rem;
+      // width: 4.0625rem;
+      // height: 1.625rem;
+      padding: 0.5rem 1rem;
       border-radius: 0.3125rem;
       background: $additional-color-1;
       cursor: pointer;

@@ -7,6 +7,8 @@ import "./index.scss";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page";
 import Signin from "./signin/signin";
+import { postForm } from "./api/request";
+import Search from "./test";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,10 @@ const router = createBrowserRouter([
     path: "/signin",
     element: <Signin />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "test",
+    element: <Search />,
   },
 ]);
 
