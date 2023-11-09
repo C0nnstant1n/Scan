@@ -1,6 +1,5 @@
 import {
   Form,
-  redirect,
   useActionData,
   useLocation,
   useNavigation,
@@ -12,8 +11,6 @@ import google from "../assets/google_button.svg";
 import facebook from "../assets/facebook_button.svg";
 import yandex from "../assets/yandex_button.svg";
 import { useState } from "react";
-import loginApi from "../api/request";
-import type { LoaderFunctionArgs } from "react-router-dom";
 
 export default function Signin() {
   const location = useLocation();
@@ -113,23 +110,4 @@ export default function Signin() {
       </div>
     </main>
   );
-}
-
-export async function loginAction({ request }: LoaderFunctionArgs) {
-  let formData = await request.formData();
-  // Sign in and redirect to the proper destination if successful.
-  try {
-    await loginApi(formData);
-  } catch (error) {
-    // Unused as of now but this is how you would handle invalid
-    // username/password combinations - just like validating the inputs
-    // above
-    console.log(error);
-    return {
-      error: err.response.data.message,
-    };
-  }
-
-  let redirectTo = formData.get("redirectTo") as string | null;
-  return redirect(redirectTo || "/");
 }

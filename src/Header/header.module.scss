@@ -46,6 +46,7 @@ header {
   }
   .account_info {
     grid-area: account-info;
+    display: flex;
   }
   .account {
     grid-area: 1 / 4 / 1 /6;

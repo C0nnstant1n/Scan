@@ -6,7 +6,8 @@ import Main from "./Main/Main";
 import "./index.scss";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page";
-import Signin, { loginAction } from "./signin/signin";
+import Signin from "./signin/signin";
+import loginAction from "./api/requests";
 
 const router = createBrowserRouter([
   {
@@ -23,9 +24,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <>
     <Header />
     <RouterProvider router={router} />
     <Footer />
-  </React.StrictMode>
+  </>
 );
