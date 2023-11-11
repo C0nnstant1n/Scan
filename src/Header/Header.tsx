@@ -1,7 +1,12 @@
 import styles from "./header.module.scss";
 import separator from "../assets/separator.svg";
 import { useState } from "react";
-import { AccountInfo } from "../api/requests";
+import { AccountInfo, authProvider } from "../api/requests";
+import avatar from "../assets/avatar.png";
+import spinner from "../assets/spinner-ico.svg";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "../redux";
+import { authorize } from "../redux/slices";
 
 interface IAccountInfo {
   eventFiltersInfo: {
@@ -11,30 +16,22 @@ interface IAccountInfo {
 }
 
 export default function Header() {
-  const expire = localStorage.getItem("expire");
-  let lifetime = 0;
-  let _info: IAccountInfo = {
-    eventFiltersInfo: {
-      companyLimit: 0,
-      usedCompanyCount: 0,
-    },
-  };
-
   const [info, setInfo] = useState<IAccountInfo | null>(null);
-  if (expire) {
-    lifetime = (Date.parse(expire) - Date.now()) / 1000;
-    if (info == null) {
-      AccountInfo().then((response: IAccountInfo) => {
-        console.log(response.eventFiltersInfo);
-        setInfo(response);
-      });
-    }
-  }
-  console.log(lifetime);
 
-  // function infoMap(){
-  //   info.
-  // }
+  const isAuthorized = useSelector(
+    (state: RootState) => state.toolkit.isAuthenticated
+  );
+  const user = useSelector((state: RootState) => state.toolkit.user);
+  console.log(user);
+
+  const dispath = useDispatch();
+
+  if (info == null && isAuthorized) {
+    AccountInfo().then((response: IAccountInfo) => {
+      setInfo(response);
+    });
+  }
+
   return (
     <>
       <header className={styles.header}>
@@ -57,40 +54,62 @@ export default function Header() {
             </ul>
           </nav>
         </div>
-        {lifetime > 10 ? (
+        {isAuthorized ? (
           <>
             <div className={styles.account_info}>
-              {info != null ? (
+              {info ? (
                 <>
-                  <div>
+                  <div className={styles.account_info__label}>
                     <p>Использовано компаний </p>
                     <p>Лимит по компаниям </p>
                   </div>
-                  <div>
-                    {" "}
-                    <p>{info.eventFiltersInfo.usedCompanyCount}</p>
-                    <p>{info.eventFiltersInfo.companyLimit}</p>
+                  <div className={styles.account_info__value}>
+                    <p className={styles.account_info__value_black}>
+                      {info && info.eventFiltersInfo.usedCompanyCount}
+                    </p>
+                    <p className={styles.account_info__value_green}>
+                      {info && info.eventFiltersInfo.companyLimit}
+                    </p>
                   </div>
                 </>
               ) : (
-                "loading"
+                <div className={styles.account_info__loading}>
+                  <img className={styles.spinner} src={spinner} alt='' />
+                </div>
               )}
             </div>
             <div className={styles.account}>
-              <div className='account-name'>
-                <p>Иванов И. И.</p>
-                <a href=''>выйти</a>
+              <div className={styles.account__name}>
+                <p>{user}</p>
+                <button
+                  className={styles.account__name_button}
+                  onClick={() => {
+                    if (confirm("Вы действительно хотите выйти?")) {
+                      localStorage.clear();
+                      window.location.reload();
+                    }
+                  }}
+                >
+                  Выйти
+                </button>
               </div>
-              <img className='avatar' src='' alt='avatar' />
+              <img
+                className={styles.account__name_avatar}
+                src={avatar}
+                alt='avatar'
+              />
             </div>
           </>
         ) : (
           <>
-            <div className={styles.account_info}></div>
             <div className={styles.account}>
               <a href='#'>Зарегистрироваться</a>
-              <img src={separator} alt='|' />
-              <a className={styles.link_button} href='/signin'>
+              <img
+                className={styles.account__separator}
+                src={separator}
+                alt='|'
+              />
+              <a className={styles.account__link_button} href='/signin'>
                 Войти
               </a>
             </div>

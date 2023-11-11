@@ -47,6 +47,48 @@ header {
   .account_info {
     grid-area: account-info;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 11rem;
+    height: 4rem;
+    border-radius: 0.3125rem;
+    background: rgba(217, 217, 217, 0.3);
+
+    .account_info__label {
+      opacity: 0.4;
+      font-size: 0.625rem;
+      text-align: end;
+      line-height: 180%;
+      padding-right: 1rem;
+    }
+    .account_info__value {
+      font-size: 0.875rem;
+      font-weight: 700;
+      .account_info__value_black {
+        color: black;
+      }
+      .account_info__value_green {
+        color: #8ac540;
+      }
+    }
+    .account_info__loading {
+      .spinner {
+        width: 1.5rem;
+        height: 1.5rem;
+        animation-name: rotation;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        @keyframes rotation {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
   }
   .account {
     grid-area: 1 / 4 / 1 /6;
@@ -55,13 +97,13 @@ header {
     align-items: center;
     margin-right: 3.75rem;
     @extend %link;
-    img {
+    .account__separator {
       width: 0.125rem;
       height: 1.625rem;
       padding: 0 1rem;
     }
 
-    .link_button {
+    .account__link_button {
       font-weight: 500;
       // width: 4.0625rem;
       // height: 1.625rem;
@@ -71,7 +113,31 @@ header {
       cursor: pointer;
       &:hover {
         background-color: #c1f0ef;
+        text-decoration: none;
       }
+    }
+    .account__name {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      opacity: 0.7;
+      font-size: 0.875rem;
+    }
+    .account__name_button {
+      background-color: $main-color-3;
+      padding-top: 0.2rem;
+      font-size: 0.625rem;
+      opacity: 0.4;
+      cursor: pointer;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .account__name_avatar {
+      padding-left: 0.3rem;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
     }
   }
 }

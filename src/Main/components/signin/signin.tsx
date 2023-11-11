@@ -4,12 +4,12 @@ import {
   useLocation,
   useNavigation,
 } from "react-router-dom";
-import charactersImg from "../assets/Characters.svg";
+import charactersImg from "../../../assets/Characters.svg";
 import styles from "./signin.module.scss";
-import lock from "../assets/lock.svg";
-import google from "../assets/google_button.svg";
-import facebook from "../assets/facebook_button.svg";
-import yandex from "../assets/yandex_button.svg";
+import lock from "../../../assets/lock.svg";
+import google from "../../../assets/google_button.svg";
+import facebook from "../../../assets/facebook_button.svg";
+import yandex from "../../../assets/yandex_button.svg";
 import { useState } from "react";
 
 export default function Signin() {
@@ -25,7 +25,7 @@ export default function Signin() {
   const [passwordCheck, setPasswordCheck] = useState(false);
 
   return (
-    <main>
+    <>
       <div className={styles.authorization}>
         <div className={styles.authorization_img}>
           <h1>Для оформления подписки на тариф, необходимо авторизоваться.</h1>
@@ -65,7 +65,9 @@ export default function Signin() {
               type='text'
               required
               minLength={8}
-              onInput={(e) => setLoginCheck(e.target.checkValidity())}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setLoginCheck(e.target.checkValidity())
+              }
             />
             <label htmlFor='password'>Пароль</label>
             <input
@@ -74,7 +76,9 @@ export default function Signin() {
               type='password'
               minLength={7}
               required
-              onInput={(e) => setPasswordCheck(e.target.checkValidity())}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPasswordCheck(e.target.checkValidity())
+              }
             />
             <button
               className={styles.active_button}
@@ -108,6 +112,6 @@ export default function Signin() {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }

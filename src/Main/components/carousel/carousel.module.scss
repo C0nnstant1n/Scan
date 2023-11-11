@@ -17,9 +17,9 @@
     align-items: center;
     justify-content: space-evenly;
     .button_left {
+      background-color: #ffffff00;
       width: 2.5rem;
       height: 2.5rem;
-      margin-right: -1rem;
       cursor: pointer;
     }
     .card {
@@ -45,9 +45,10 @@
       }
     }
     .button_right {
+      background-color: #ffffff00;
       width: 2.5rem;
       height: 2.5rem;
-      margin-left: -1rem;
+
       cursor: pointer;
       img {
         rotate: 180deg;

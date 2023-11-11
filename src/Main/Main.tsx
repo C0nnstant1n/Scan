@@ -3,10 +3,30 @@ import topImage from "../assets/2398.png";
 import Carousel from "./components/carousel/carousel";
 import middleImage from "../assets/Group 14.svg";
 import Tariffs from "./components/tariffs/tariffs";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "../redux";
+import { authorize, login } from "../redux/slices";
 
 export default function Main() {
+  let lifetime = 0;
+  const dispatch = useDispatch();
+  const user = localStorage.getItem("user");
+  console.log(user);
+  dispatch(login(user));
+  const expire = localStorage.getItem("expire");
+  if (expire) {
+    lifetime = (Date.parse(expire) - Date.now()) / 1000;
+  }
+
+  lifetime > 10 ? dispatch(authorize(true)) : dispatch(authorize(false));
+
+  const isAuthorized = useSelector(
+    (state: RootState) => state.toolkit.isAuthenticated
+  );
+  console.log(isAuthorized);
+
   return (
-    <main>
+    <>
       <div className={styles.top_container}>
         <div className={styles.heading}>
           <h1>сервис по поиску публикаций о компании по его ИНН</h1>
@@ -14,7 +34,7 @@ export default function Main() {
             Комплексный анализ публикаций, получение данных в формате PDF на
             электронную почту.
           </p>
-          <button>Запросить данные</button>
+          {user && <button>Запросить данные</button>}
         </div>
         <div className={styles.back_img}>
           <img src={topImage} alt='' />
@@ -25,6 +45,6 @@ export default function Main() {
         <img src={middleImage} alt='image' />
       </div>
       <Tariffs />
-    </main>
+    </>
   );
 }

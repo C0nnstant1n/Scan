@@ -1,47 +1,55 @@
 import axios from "axios";
-import { mainURL, login, accountInfo } from "./vars";
-import { redirect } from "react-router-dom";
+import { mainURL, loginUrl, accountInfo } from "./vars";
+import { redirectDocument } from "react-router-dom";
 import type { LoaderFunctionArgs } from "react-router-dom";
 
-async function loginApi(data: FormData) {
-  let loginData = {
+interface ILoginData {
+  login: string | null;
+  password: string | null;
+}
+interface IAuthProvider {
+  signin(loginData: ILoginData): Promise<void>;
+  signout(): Promise<void>;
+}
+
+export const authProvider: IAuthProvider = {
+  async signin(loginData) {
+    await axios.post(mainURL + loginUrl, loginData).then((request) => {
+      localStorage.setItem("accessToken", request.data.accessToken);
+      localStorage.setItem("expire", request.data.expire);
+      localStorage.setItem("user", loginData.login as string);
+    });
+  },
+  async signout() {
+    localStorage.clear();
+  },
+};
+
+export default async function loginAction({ request }: LoaderFunctionArgs) {
+  let formData = await request.formData();
+  let loginData: ILoginData = {
     login: "",
     password: "",
   };
 
-  data.forEach((value, key) => (loginData[key] = value));
-  // console.log(loginData);
+  loginData.login = formData.get("login") as string | null;
+  loginData.password = formData.get("password") as string | null;
 
-  const loginResponse = await axios
-    .post(mainURL + login, loginData)
-    .then((request) => {
-      console.log(request);
-      if (request.status === 200) {
-        localStorage.setItem("accessToken", request.data.accessToken);
-        localStorage.setItem("expire", request.data.expire);
-      }
-      return [request.status, request.statusText];
-    });
-  return loginResponse;
-}
-
-export default async function loginAction({ request }: LoaderFunctionArgs) {
-  let formData = await request.formData();
   // Sign in and redirect to the proper destination if successful.
+
   try {
-    await loginApi(formData);
+    await authProvider.signin(loginData);
   } catch (error) {
-    // Unused as of now but this is how you would handle invalid
-    // username/password combinations - just like validating the inputs
-    // above
-    console.log(error);
-    return {
-      error: err.response.data.message,
-    };
+    // console.log(error);
+    if (error.response.data.message) {
+      return { error: error.response.data.message };
+    }
+    return { error: error.message };
   }
+  console.log(authProvider);
 
   let redirectTo = formData.get("redirectTo") as string | null;
-  return redirect(redirectTo || "/");
+  return redirectDocument(redirectTo || "/");
 }
 
 export async function AccountInfo() {
