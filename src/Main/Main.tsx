@@ -6,6 +6,7 @@ import Tariffs from "./components/tariffs/tariffs";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../redux";
 import { authorize, login } from "../redux/slices";
+import { Link } from "react-router-dom";
 
 export default function Main() {
   let lifetime = 0;
@@ -34,7 +35,11 @@ export default function Main() {
             Комплексный анализ публикаций, получение данных в формате PDF на
             электронную почту.
           </p>
-          {user && <button>Запросить данные</button>}
+          {user && (
+            <button>
+              <Link to='/search'>Запросить данные</Link>
+            </button>
+          )}
         </div>
         <div className={styles.back_img}>
           <img src={topImage} alt='' />

@@ -9,6 +9,7 @@ import Signin from "./Main/components/signin/signin";
 import loginAction, { authProvider } from "./api/requests";
 import { Provider } from "react-redux";
 import { store } from "./redux";
+import Search from "./Main/components/search/Search";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +17,17 @@ const router = createBrowserRouter([
     path: "/",
     element: <Main />,
     errorElement: <ErrorPage />,
-    loader() {
-      return { user: authProvider.username };
-    },
   },
   {
     path: "/signin",
     element: <Signin />,
     errorElement: <ErrorPage />,
     action: loginAction,
+  },
+  {
+    path: "search",
+    element: <Search />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
