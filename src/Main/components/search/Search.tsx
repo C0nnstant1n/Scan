@@ -12,20 +12,21 @@ export default function Search() {
           <div className={styles.heading__content}>
             <h1>Найдите необходимые данные в пару кликов.</h1>
             <div className={styles.heading__comment}>
-              <p>
-                Задайте параметры поиска. Чем больше заполните, тем точнее поиск
-              </p>
+              <p>Задайте параметры поиска.</p>
+              <p>Чем больше заполните, тем точнее поиск</p>
             </div>
           </div>
           <div className={styles.heading__img}>
-            <img src={document_img} alt='document image' />
-            <img src={folders_img} alt='folders image' />
+            <div className={styles.wrapper_img}>
+              <img src={document_img} alt='document image' />
+              <img src={folders_img} alt='folders image' />
+            </div>
           </div>
         </div>
 
         <div className={styles.form_wrapper}>
           <SearchForm />
-          <div className={styles.search_form_img}>
+          <div className={styles.search_form__img}>
             <img src={search_background} alt='search_form img' />
           </div>
         </div>

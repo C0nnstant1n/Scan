@@ -1,12 +1,11 @@
 import styles from "./header.module.scss";
 import separator from "../assets/separator.svg";
 import { useState } from "react";
-import { AccountInfo, authProvider } from "../api/requests";
+import { AccountInfo } from "../api/requests";
 import avatar from "../assets/avatar.png";
 import spinner from "../assets/spinner-ico.svg";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../redux";
-import { authorize } from "../redux/slices";
 
 interface IAccountInfo {
   eventFiltersInfo: {
