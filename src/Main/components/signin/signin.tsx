@@ -20,6 +20,7 @@ export default function Signin() {
   const navigation = useNavigation();
   let isLogginIn = navigation.formData?.get("login") != null;
   let actionData = useActionData() as { error: string } | undefined;
+  console.log(actionData);
 
   const [loginCheck, setLoginCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);

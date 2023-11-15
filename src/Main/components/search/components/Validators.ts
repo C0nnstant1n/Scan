@@ -51,3 +51,31 @@ export default function validateInn(inn: string) {
   }
   return error;
 }
+
+export function DateValidate(date: string) {
+  if (/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(date)) {
+    const ed = new Date(date);
+    return ed.toString() != "Invalid Date" ? ed : false;
+  }
+  return false;
+}
+
+export function dateIntervalValidate(
+  dateFrom: boolean | Date,
+  dateTo: boolean | Date
+) {
+  const now = new Date();
+  if (typeof dateFrom == "boolean" && typeof dateTo == "boolean") {
+    return { code: false, message: "введите корректные данные" };
+  }
+  if (dateTo <= now) {
+    return { code: false, message: "даты не должны быть в будущем времени" };
+  }
+  if (dateFrom <= dateTo) {
+    return {
+      code: false,
+      message: "дата начала не может быть позже даты конца",
+    };
+  }
+  return { code: true, message: "ok" };
+}

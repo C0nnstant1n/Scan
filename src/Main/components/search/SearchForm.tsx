@@ -3,10 +3,27 @@ import {
   getInputNumbersValue,
   getFormattedValue,
 } from "./components/FormatValues";
-import validateInn from "./components/Validators";
+import validateInn, {
+  DateValidate,
+  dateIntervalValidate,
+} from "./components/Validators";
 import { useState } from "react";
+import {
+  useLocation,
+  useNavigation,
+  useActionData,
+  Form,
+} from "react-router-dom";
 
 export default function SearchForm() {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  let from = params.get("form") || "/";
+
+  const navigation = useNavigation();
+  let isINN = navigation.formData?.get("inn") != null;
+  // let actionData = useActionData() as { error: string } | undefined;
+
   const [fieldInnValid, setFieldInnValid] = useState({
     code: 1,
     message: "заполните поле",
@@ -16,14 +33,20 @@ export default function SearchForm() {
     message: "заполните поле",
   });
   const [fieldDate, setFieldDate] = useState({
-    code: false,
-    dateFrom: "",
-    dateTo: "",
-    message: "заполните оба поля",
+    dateFrom: false as Date | boolean,
+    dateTo: false as Date | boolean,
+    message: "введите корректные данные",
   });
 
+  const dateInterval = dateIntervalValidate(
+    fieldDate.dateFrom,
+    fieldDate.dateTo
+  );
+  fieldDate.message = dateInterval.message;
+
   return (
-    <form className={styles.search_form} action=''>
+    <Form className={styles.search_form} method='post' replace>
+      <input type='hidden' name='redirectTo' value={from} />
       <ul className={styles.search_form__input}>
         <label
           htmlFor='INN'
@@ -36,6 +59,7 @@ export default function SearchForm() {
           <br />
           <input
             id='INN'
+            name='inn'
             type='text'
             placeholder='10 цифр'
             maxLength={12}
@@ -55,11 +79,10 @@ export default function SearchForm() {
         <label htmlFor='TONE'>
           <span>Тональность</span>
           <br />
-          <select name='tone' id='TONE'>
+          <select name='tonality' id='TONE'>
             <option value='Любая'>Любая</option>
-            <option value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
+            <option value='1'>Позитивная</option>
+            <option value='2'>Негативная</option>
           </select>
           <p style={{ visibility: "hidden" }}>hide </p>
         </label>
@@ -88,45 +111,52 @@ export default function SearchForm() {
           <p>{fieldCountValid.message}</p>
         </label>
 
-        <label className={styles.range + " " + styles.error}>
+        <label
+          className={
+            styles.range +
+            " " +
+            (fieldDate.dateFrom && fieldDate.dateTo
+              ? styles.valid
+              : styles.error)
+          }
+        >
           <span>
             Диапазон поиска <sup>*</sup>
           </span>
           <br />
           <input
-            className={styles.range_from}
-            name='dateFrom'
+            id={fieldDate.dateFrom ? styles.range_from : "dateFrom"}
+            name='startDate'
             type='date'
             placeholder='Дата начала'
             required
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const d = fieldDate;
-              d.dateFrom = new Date(e.target.value);
-              console.log(fieldDate.dateFrom);
-              // let date = `${fieldDate.dateFrom.getFullYear()}-${fieldDate.dateFrom.getMonth()}-${fieldDate.dateFrom.getDate()}`;
-
-              console.log(e.target.value);
-
-              setFieldDate(d);
+              const dateValue = e.target.value;
+              const fields = {
+                dateFrom: DateValidate(dateValue),
+                dateTo: fieldDate.dateTo,
+                message: "Заполните конечную дату ",
+              };
+              setFieldDate(fields);
             }}
           />
           <input
-            className={styles.range_to}
-            name='date_to'
+            id={fieldDate.dateTo ? styles.range_to : "dateTo"}
+            name='endDate'
             type='date'
             placeholder='Дата конца'
             required
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const d = fieldDate;
-              d.dateTo = new Date(e.target.value);
-              d.code = true;
-              console.log(d);
-
-              setFieldDate(d);
-              console.log(fieldDate);
+              const dateValue = e.target.value;
+              const fields = {
+                dateFrom: fieldDate.dateFrom,
+                dateTo: DateValidate(dateValue),
+                message: "Заполните начальную дату ",
+              };
+              setFieldDate(fields);
             }}
           />
-          <p>Введите корректные данные</p>
+          <p>{fieldDate.message}</p>
         </label>
       </ul>
       <ul className={styles.search_form__checkbox}>
@@ -139,55 +169,42 @@ export default function SearchForm() {
           <label htmlFor='mentions'>Упоминания в бизнес-контексте</label>
         </li>
         <li>
-          <input id='role' type='checkbox' />
+          <input id='role' type='checkbox' name='onlyMainRole' />
           <label htmlFor='role'>Главная роль в публикации</label>
         </li>
         <li>
-          <input id='risc' type='checkbox' />
+          <input id='risc' type='checkbox' name='onlyWithRiskFactors' />
           <label htmlFor='risc'>Публикации только с риск-факторами</label>
         </li>
         <li>
-          <input id='technic' type='checkbox' />
+          <input id='technic' type='checkbox' name='excludeTechNews' />
           <label htmlFor='technic'>Включать технические новости рынков</label>
         </li>
         <li>
-          <input id='announce' type='checkbox' />
+          <input id='announce' type='checkbox' name='excludeAnnouncements' />
           <label htmlFor='announce'>Включать анонсы и календари</label>
         </li>
         <li>
-          <input id='news' type='checkbox' />
+          <input id='news' type='checkbox' name='excludeDigests' />
           <label htmlFor='news'>Включать сводки новостей</label>
         </li>
-        <p>inn {String(!fieldInnValid.code ? true : false)}</p>
-        <p>count {fieldCountValid.code.toString()}</p>
-        <p>date {fieldDate.code.toString()}</p>
-        <p>
-          {" "}
-          all{" "}
-          {String(
-            (!fieldInnValid.code ? true : false) &&
-              fieldCountValid.code &&
-              fieldDate.code
-              ? true
-              : false
-          )}
-        </p>
 
         <button
+          type='submit'
           disabled={
-            (!fieldInnValid.code ? true : false) &&
-            fieldCountValid.code &&
-            fieldDate.code
-              ? false
-              : true
+            !(
+              (!fieldInnValid.code ? true : false) &&
+              fieldCountValid.code &&
+              dateInterval.code
+            )
           }
         >
-          Поиск
+          {isINN ? "Поиск...." : "Поиск"}
         </button>
         <p>
           <sup>*</sup> Обязательные к заполнению поля
         </p>
       </ul>
-    </form>
+    </Form>
   );
 }
