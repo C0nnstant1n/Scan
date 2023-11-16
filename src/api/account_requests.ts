@@ -48,9 +48,9 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
     }
     return { error: error.message };
   }
-  console.log(authProvider);
-
   let redirectTo = formData.get("redirectTo") as string | null;
+  console.log(redirectTo);
+
   return redirectDocument(redirectTo || "/");
 }
 

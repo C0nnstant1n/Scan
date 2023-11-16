@@ -37,6 +37,11 @@
         background-color: #a7b1f5;
       }
     }
+    a {
+      color: $main-color-3;
+      font-size: 1.375rem;
+      text-decoration: none;
+    }
   }
   .back_img {
     z-index: 0;

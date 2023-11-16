@@ -14,13 +14,16 @@ import { useState } from "react";
 
 export default function Signin() {
   const location = useLocation();
+  // console.log(location);
+
   const params = new URLSearchParams(location.search);
-  let from = params.get("form") || "/";
+  let from = params.get("from") || "/";
 
   const navigation = useNavigation();
   let isLogginIn = navigation.formData?.get("login") != null;
   let actionData = useActionData() as { error: string } | undefined;
-  console.log(actionData);
+
+  // console.log(from);
 
   const [loginCheck, setLoginCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);

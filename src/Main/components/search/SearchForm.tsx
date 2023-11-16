@@ -8,12 +8,7 @@ import validateInn, {
   dateIntervalValidate,
 } from "./components/Validators";
 import { useState } from "react";
-import {
-  useLocation,
-  useNavigation,
-  useActionData,
-  Form,
-} from "react-router-dom";
+import { useLocation, useNavigation, Form } from "react-router-dom";
 
 export default function SearchForm() {
   const location = useLocation();
@@ -36,13 +31,22 @@ export default function SearchForm() {
     dateFrom: false as Date | boolean,
     dateTo: false as Date | boolean,
     message: "введите корректные данные",
+    code: false,
   });
 
-  const dateInterval = dateIntervalValidate(
-    fieldDate.dateFrom,
-    fieldDate.dateTo
-  );
-  fieldDate.message = dateInterval.message;
+  // if (fieldDate.dateFrom && fieldDate.dateTo && !fieldDate.code) {
+  //   const dateInterval = dateIntervalValidate(
+  //     fieldDate.dateFrom,
+  //     fieldDate.dateTo
+  //   );
+  //   const interavlValidate = {
+  //     dateFrom: fieldDate.dateFrom,
+  //     dateTo: fieldDate.dateTo,
+  //     message: dateInterval.message,
+  //     code: dateInterval.code,
+  //   };
+  //   setFieldDate(interavlValidate);
+  // }
 
   return (
     <Form className={styles.search_form} method='post' replace>
@@ -113,11 +117,7 @@ export default function SearchForm() {
 
         <label
           className={
-            styles.range +
-            " " +
-            (fieldDate.dateFrom && fieldDate.dateTo
-              ? styles.valid
-              : styles.error)
+            styles.range + " " + (fieldDate.code ? styles.valid : styles.error)
           }
         >
           <span>
@@ -131,11 +131,14 @@ export default function SearchForm() {
             placeholder='Дата начала'
             required
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const dateValue = e.target.value;
+              const dateValue = DateValidate(e.target.value);
               const fields = {
-                dateFrom: DateValidate(dateValue),
+                dateFrom: dateValue,
                 dateTo: fieldDate.dateTo,
-                message: "Заполните конечную дату ",
+                message: fieldDate.dateTo
+                  ? dateIntervalValidate(dateValue, fieldDate.dateTo).message
+                  : "Заполните конечную дату ",
+                code: dateIntervalValidate(dateValue, fieldDate.dateTo).code,
               };
               setFieldDate(fields);
             }}
@@ -147,11 +150,14 @@ export default function SearchForm() {
             placeholder='Дата конца'
             required
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const dateValue = e.target.value;
+              const dateValue = DateValidate(e.target.value);
               const fields = {
                 dateFrom: fieldDate.dateFrom,
-                dateTo: DateValidate(dateValue),
-                message: "Заполните начальную дату ",
+                dateTo: dateValue,
+                message: fieldDate.dateFrom
+                  ? dateIntervalValidate(fieldDate.dateFrom, dateValue).message
+                  : "Заполните начальную дату ",
+                code: dateIntervalValidate(fieldDate.dateFrom, dateValue).code,
               };
               setFieldDate(fields);
             }}
@@ -195,7 +201,7 @@ export default function SearchForm() {
             !(
               (!fieldInnValid.code ? true : false) &&
               fieldCountValid.code &&
-              dateInterval.code
+              fieldDate.code
             )
           }
         >

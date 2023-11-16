@@ -6,11 +6,12 @@ import "./index.scss";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page";
 import Signin from "./Main/components/signin/signin";
-import loginAction, { authProvider } from "./api/account_requests";
+import loginAction from "./api/account_requests";
 import { Provider } from "react-redux";
 import { store } from "./redux";
 import Search from "./Main/components/search/Search";
 import searchAction from "./api/form_requests";
+import { protectedLoader } from "./Main/components/search/Search";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
     element: <Search />,
     errorElement: <ErrorPage />,
     action: searchAction,
+    loader: protectedLoader,
   },
 ]);
 

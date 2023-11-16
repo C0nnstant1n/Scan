@@ -3,28 +3,13 @@ import topImage from "../assets/2398.png";
 import Carousel from "./components/carousel/carousel";
 import middleImage from "../assets/Group 14.svg";
 import Tariffs from "./components/tariffs/tariffs";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../redux";
-import { authorize, login } from "../redux/slices";
+
 import { Link } from "react-router-dom";
 
 export default function Main() {
-  let lifetime = 0;
-  const dispatch = useDispatch();
-  const user = localStorage.getItem("user");
-  console.log(user);
-  dispatch(login(user));
-  const expire = localStorage.getItem("expire");
-  if (expire) {
-    lifetime = (Date.parse(expire) - Date.now()) / 1000;
-  }
-
-  lifetime > 10 ? dispatch(authorize(true)) : dispatch(authorize(false));
-
-  const isAuthorized = useSelector(
-    (state: RootState) => state.toolkit.isAuthenticated
-  );
-  console.log(isAuthorized);
+  const user = useSelector((state: RootState) => state.toolkit.user);
 
   return (
     <>

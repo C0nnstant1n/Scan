@@ -65,13 +65,17 @@ export function dateIntervalValidate(
   dateTo: boolean | Date
 ) {
   const now = new Date();
-  if (typeof dateFrom == "boolean" && typeof dateTo == "boolean") {
+  console.log(now);
+
+  console.log(dateFrom);
+  console.log(dateTo);
+  if (typeof dateFrom == "boolean" || typeof dateTo == "boolean") {
     return { code: false, message: "введите корректные данные" };
   }
-  if (dateTo <= now) {
+  if (now < dateTo) {
     return { code: false, message: "даты не должны быть в будущем времени" };
   }
-  if (dateFrom <= dateTo) {
+  if (dateTo < dateFrom) {
     return {
       code: false,
       message: "дата начала не может быть позже даты конца",

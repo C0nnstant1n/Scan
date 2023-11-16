@@ -3,6 +3,27 @@ import styles from "./search.module.scss";
 import document_img from "../../../assets/Document.svg";
 import folders_img from "../../../assets/Folders.svg";
 import search_background from "../../../assets/search_background_img.svg";
+import type { LoaderFunctionArgs } from "react-router-dom";
+import { redirect } from "react-router-dom";
+
+export function protectedLoader({ request }: LoaderFunctionArgs) {
+  // If the user is not logged in and tries to access `/protected`, we redirect
+  // them to `/login` with a `from` parameter that allows login to redirect back
+  // to this page upon successful authentication
+  // console.log(request);
+  const isAuthorized = localStorage.getItem("user") ? true : false;
+
+  if (!isAuthorized) {
+    let params = new URLSearchParams();
+    params.set("from", new URL(request.url).pathname);
+    // console.log(params.toString());
+    // если пользователь не авторизован, можно отправить его на страницу входа
+    // return redirect("/signin?" + params.toString());
+    // но по техзаданию мы должны его отправить на главную страницу
+    return redirect("/");
+  }
+  return null;
+}
 
 export default function Search() {
   return (
