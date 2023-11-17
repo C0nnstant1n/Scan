@@ -17,7 +17,6 @@ export default function SearchForm() {
 
   const navigation = useNavigation();
   let isINN = navigation.formData?.get("inn") != null;
-  // let actionData = useActionData() as { error: string } | undefined;
 
   const [fieldInnValid, setFieldInnValid] = useState({
     code: 1,
@@ -33,20 +32,6 @@ export default function SearchForm() {
     message: "введите корректные данные",
     code: false,
   });
-
-  // if (fieldDate.dateFrom && fieldDate.dateTo && !fieldDate.code) {
-  //   const dateInterval = dateIntervalValidate(
-  //     fieldDate.dateFrom,
-  //     fieldDate.dateTo
-  //   );
-  //   const interavlValidate = {
-  //     dateFrom: fieldDate.dateFrom,
-  //     dateTo: fieldDate.dateTo,
-  //     message: dateInterval.message,
-  //     code: dateInterval.code,
-  //   };
-  //   setFieldDate(interavlValidate);
-  // }
 
   return (
     <Form className={styles.search_form} method='post' replace>
@@ -84,9 +69,9 @@ export default function SearchForm() {
           <span>Тональность</span>
           <br />
           <select name='tonality' id='TONE'>
-            <option value='Любая'>Любая</option>
-            <option value='1'>Позитивная</option>
-            <option value='2'>Негативная</option>
+            <option value='any'>Любая</option>
+            <option value='positiv'>Позитивная</option>
+            <option value='negativ'>Негативная</option>
           </select>
           <p style={{ visibility: "hidden" }}>hide </p>
         </label>
@@ -101,6 +86,7 @@ export default function SearchForm() {
           <br />
           <input
             id='COUNT'
+            name='limit'
             type='number'
             min={1}
             max={1000}
@@ -167,11 +153,11 @@ export default function SearchForm() {
       </ul>
       <ul className={styles.search_form__checkbox}>
         <li>
-          <input id='completeness' type='checkbox' />
+          <input id='completeness' type='checkbox' name='maxFullness' />
           <label htmlFor='completeness'>Признак максимальной полноты</label>
         </li>
         <li>
-          <input id='mentions' type='checkbox' />
+          <input id='mentions' type='checkbox' name='inBusinessNews' />
           <label htmlFor='mentions'>Упоминания в бизнес-контексте</label>
         </li>
         <li>

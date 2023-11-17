@@ -12,6 +12,7 @@ import { store } from "./redux";
 import Search from "./Main/components/search/Search";
 import searchAction from "./api/form_requests";
 import { protectedLoader } from "./Main/components/search/Search";
+import SearchResult from "./Main/components/search/result";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     action: searchAction,
     loader: protectedLoader,
+  },
+  {
+    path: "result",
+    element: <SearchResult />,
+    loader: ({ params }) => {
+      console.log(params);
+    },
   },
 ]);
 

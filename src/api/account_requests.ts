@@ -27,6 +27,8 @@ export const authProvider: IAuthProvider = {
 
 export default async function loginAction({ request }: LoaderFunctionArgs) {
   let formData = await request.formData();
+  console.log(request);
+
   console.log(formData);
 
   let loginData: ILoginData = {

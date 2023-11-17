@@ -65,10 +65,7 @@ export function dateIntervalValidate(
   dateTo: boolean | Date
 ) {
   const now = new Date();
-  console.log(now);
 
-  console.log(dateFrom);
-  console.log(dateTo);
   if (typeof dateFrom == "boolean" || typeof dateTo == "boolean") {
     return { code: false, message: "введите корректные данные" };
   }

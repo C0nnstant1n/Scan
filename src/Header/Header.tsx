@@ -4,9 +4,8 @@ import { useState } from "react";
 import { AccountInfo } from "../api/account_requests";
 import avatar from "../assets/avatar.png";
 import spinner from "../assets/spinner-ico.svg";
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "../redux";
-import { authorize, login } from "../redux/slices";
+import { authorize, login } from "../redux/authorizeSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 interface IAccountInfo {
   eventFiltersInfo: {
@@ -19,10 +18,11 @@ export default function Header() {
   const [info, setInfo] = useState<IAccountInfo | null>(null);
 
   let lifetime = 0;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = localStorage.getItem("user");
   // console.log(user);
   dispatch(login(user));
+
   const expire = localStorage.getItem("expire");
   if (expire) {
     lifetime = (Date.parse(expire) - Date.now()) / 1000;
@@ -33,9 +33,7 @@ export default function Header() {
     ? (dispatch(authorize(true)), dispatch(login(user)))
     : (dispatch(authorize(false)), dispatch(login(null)));
 
-  const isAuthorized = useSelector(
-    (state: RootState) => state.toolkit.isAuthenticated
-  );
+  const isAuthorized = useAppSelector((state) => state.toolkit.isAuthenticated);
 
   if (info == null && isAuthorized) {
     AccountInfo().then((response: IAccountInfo) => {
