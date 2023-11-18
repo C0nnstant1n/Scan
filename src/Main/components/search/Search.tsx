@@ -4,7 +4,8 @@ import document_img from "../../../assets/Document.svg";
 import folders_img from "../../../assets/Folders.svg";
 import search_background from "../../../assets/search_background_img.svg";
 import type { LoaderFunctionArgs } from "react-router-dom";
-import { redirect } from "react-router-dom";
+import { redirect, useActionData } from "react-router-dom";
+import SearchResult from "./Result.js";
 
 export function protectedLoader({ request }: LoaderFunctionArgs) {
   // If the user is not logged in and tries to access `/protected`, we redirect
@@ -26,6 +27,11 @@ export function protectedLoader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Search() {
+  let formData = useActionData();
+  if (formData) {
+    return <SearchResult formData={formData} />;
+  }
+
   return (
     <>
       <div className={styles.wrapper}>

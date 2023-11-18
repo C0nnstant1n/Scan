@@ -1,19 +1,12 @@
-import { redirect, type LoaderFunctionArgs } from "react-router-dom";
+import type { LoaderFunctionArgs } from "react-router-dom";
 import {
   histograms,
   company,
   search,
-  // Ihistograms,
-} from "./histograms_interface";
-// import axios from "axios";
-// import { histogramsURL, mainURL } from "./vars";
-// import { AppDispatch } from "../redux";
-// import histogramsSlice from "../redux/histogramsSlice";
+} from "../../../../api/histograms_interface";
 
 export default async function searchAction({ request }: LoaderFunctionArgs) {
   let formData = await request.formData();
-  //   const Data = formData.get("inn") as string | null;
-  console.log(formData.get("redirectTo"));
 
   histograms.issueDateInterval.startDate = new Date(
     formData.get("startDate") as string
@@ -56,8 +49,5 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
   search.targetSearchEntitiesContext.tonality = formData.get(
     "tonality"
   ) as string;
-  let redirectTo = formData.get("redirectTo") as string | null;
-  console.log(histograms);
-
-  return redirect("/result");
+  return histograms;
 }

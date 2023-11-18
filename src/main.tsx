@@ -10,9 +10,9 @@ import loginAction from "./api/account_requests";
 import { Provider } from "react-redux";
 import { store } from "./redux";
 import Search from "./Main/components/search/Search";
-import searchAction from "./api/form_requests";
+import searchAction from "./Main/components/search/components/searchAction";
 import { protectedLoader } from "./Main/components/search/Search";
-import SearchResult from "./Main/components/search/result";
+import SearchResult from "./Main/components/search/Result";
 
 const router = createBrowserRouter([
   {
@@ -37,9 +37,6 @@ const router = createBrowserRouter([
   {
     path: "result",
     element: <SearchResult />,
-    loader: ({ params }) => {
-      console.log(params);
-    },
   },
 ]);
 

@@ -1,18 +1,23 @@
 import { histogramsApi } from "../../../redux/HistogramSevice";
-import { LoaderFunctionArgs, useLocation } from "react-router-dom";
 
-export default function SearchResult() {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  console.log(params);
+export default function SearchResult(props) {
+  console.log(props.formData);
+  const [searhHistograms, { data: logData, error: createError }] =
+    histogramsApi.useSearchHistogramsMutation();
+  // console.log(data);
 
-  const { data: post } = histogramsApi.useGetPostsQuery(1);
-  console.log(post);
-
+  const getHistograms = async () => {
+    await searhHistograms({ body: props.formData });
+  };
+  console.log(logData);
   return (
     <>
       <div className='result'>
         <h1> Результаты поиска</h1>
+
+        <button onClick={getHistograms}>get</button>
+        {/* {isLoading && <h2>Данные загружаются</h2>} */}
+        {/* {error && <h2>Произошла ошибка при запросе</h2>} */}
       </div>
     </>
   );
