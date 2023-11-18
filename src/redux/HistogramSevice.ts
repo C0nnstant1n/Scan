@@ -14,8 +14,8 @@ export const histogramsApi = createApi({
         method: "post",
         body: formData,
         headers: {
-          Accept: "aplication/json",
-          "Content-Type": "aplication/json",
+          Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }),

@@ -2,14 +2,14 @@ import { histogramsApi } from "../../../redux/HistogramSevice";
 
 export default function SearchResult(props) {
   console.log(props.formData);
-  const [searhHistograms, { data: logData, error: createError }] =
+  const [searhHistograms, { data, error }] =
     histogramsApi.useSearchHistogramsMutation();
   // console.log(data);
 
   const getHistograms = async () => {
-    await searhHistograms({ body: props.formData });
+    await searhHistograms({ ...props.formData });
   };
-  console.log(logData);
+  console.log(data);
   return (
     <>
       <div className='result'>

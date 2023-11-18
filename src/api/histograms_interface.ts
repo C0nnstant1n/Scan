@@ -1,42 +1,98 @@
-let company = {
-  type: "company",
-  sparkId: null,
-  entityId: null,
-  inn: "0",
-  maxFullness: true,
-  inBusinessNews: null as boolean | null,
-};
+interface Icompany {
+  type: string;
+  sparkId: number | null;
+  entityId: number | null;
+  inn: number | null;
+  maxFullness: Boolean;
+  inBusinessNews: Boolean;
+}
 
-let search = {
+interface Isearch {
   targetSearchEntitiesContext: {
-    targetSearchEntities: [company],
-    onlyMainRole: true,
-    tonality: "any",
-    onlyWithRiskFactors: false,
+    targetSearchEntities: Icompany[];
+    onlyMainRole: Boolean;
+    tonality: string;
+    onlyWithRiskFactors: Boolean;
     riskFactors: {
-      and: [],
-      or: [],
-      not: [],
-    },
+      and: [];
+      or: [];
+      not: [];
+    };
     themes: {
-      and: [],
-      or: [],
-      not: [],
-    },
-  },
+      and: [];
+      or: [];
+      not: [];
+    };
+  };
   themesFilter: {
-    and: [],
-    or: [],
-    not: [],
-  },
-};
+    and: [];
+    or: [];
+    not: [];
+  };
+}
 
-const histograms = {
+interface Ihistograms {
+  issueDateInterval: {
+    startDate: string;
+    endDate: string;
+  };
+  searchContext: Isearch;
+  searchArea: {
+    includedSources: [];
+    excludedSources: [];
+    includedSourceGroups: [];
+    excludedSourceGroups: [];
+  };
+  attributeFilters: {
+    excludeTechNews: Boolean;
+    excludeAnnouncements: Boolean;
+    excludeDigests: Boolean;
+  };
+  similarMode: string;
+  limit: number;
+  sortType: string;
+  sortDirectionType: string;
+  intervalType: string;
+  histogramTypes: string[];
+}
+
+export let histograms = {
   issueDateInterval: {
     startDate: "2019-01-01T00:00:00+03:00",
     endDate: "2022-08-31T23:59:59+03:00",
   },
-  searchContext: search,
+  searchContext: {
+    targetSearchEntitiesContext: {
+      targetSearchEntities: [
+        {
+          type: "company",
+          sparkId: null,
+          entityId: null,
+          inn: 7710137066,
+          maxFullness: true,
+          inBusinessNews: null,
+        },
+      ],
+      onlyMainRole: true,
+      tonality: "any",
+      onlyWithRiskFactors: false,
+      riskFactors: {
+        and: [],
+        or: [],
+        not: [],
+      },
+      themes: {
+        and: [],
+        or: [],
+        not: [],
+      },
+    },
+    themesFilter: {
+      and: [],
+      or: [],
+      not: [],
+    },
+  },
   searchArea: {
     includedSources: [],
     excludedSources: [],
@@ -49,16 +105,16 @@ const histograms = {
     excludeDigests: true,
   },
   similarMode: "duplicates",
-  limit: "1000",
+  limit: 1000,
   sortType: "sourceInfluence",
   sortDirectionType: "desc",
   intervalType: "month",
   histogramTypes: ["totalDocuments", "riskFactors"],
 };
 
-export { histograms, company, search };
+export type { Ihistograms, Icompany, Isearch };
 
-export interface Ihistograms {
+export interface IhistogramsResponce {
   data: [
     {
       data: [
