@@ -56,7 +56,7 @@ interface Ihistograms {
   histogramTypes: string[];
 }
 
-export let histograms = {
+export let histograms: Ihistograms = {
   issueDateInterval: {
     startDate: "2019-01-01T00:00:00+03:00",
     endDate: "2022-08-31T23:59:59+03:00",
@@ -70,7 +70,7 @@ export let histograms = {
           entityId: null,
           inn: 7710137066,
           maxFullness: true,
-          inBusinessNews: null,
+          inBusinessNews: false,
         },
       ],
       onlyMainRole: true,
@@ -105,7 +105,7 @@ export let histograms = {
     excludeDigests: true,
   },
   similarMode: "duplicates",
-  limit: 1000,
+  limit: 100,
   sortType: "sourceInfluence",
   sortDirectionType: "desc",
   intervalType: "month",
@@ -114,16 +114,16 @@ export let histograms = {
 
 export type { Ihistograms, Icompany, Isearch };
 
+interface IDataItem {
+  date: string;
+  value: number;
+}
+
+interface IHistogram {
+  data: IDataItem[];
+  histogramType: string;
+}
+
 export interface IhistogramsResponce {
-  data: [
-    {
-      data: [
-        {
-          date: string;
-          value: number;
-        }
-      ];
-      histogramType: string;
-    }
-  ];
+  data: IHistogram[];
 }

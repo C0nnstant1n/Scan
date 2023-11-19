@@ -1,10 +1,15 @@
-import type { LoaderFunctionArgs } from "react-router-dom";
-import { Icompany, histograms } from "../../../../api/histograms_interface";
+import { redirect, type LoaderFunctionArgs } from "react-router-dom";
+import { histograms } from "./histograms_interface";
+// import axios from "axios";
+// import { histogramsURL, mainURL } from "./vars";
+// import { AppDispatch } from "../redux";
+// import histogramsSlice from "../redux/histogramsSlice";
 
 export default async function searchAction({ request }: LoaderFunctionArgs) {
   let formData = await request.formData();
+  //   const Data = formData.get("inn") as string | null;
+  console.log(formData.get("redirectTo"));
 
-  histograms.histogramTypes = ["totalDocuments", "riskFactors"];
   histograms.issueDateInterval.startDate = new Date(
     formData.get("startDate") as string
   ).toISOString();
@@ -16,19 +21,9 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
 
   const inn = formData.get("inn") as string;
 
-  let company: Icompany = {
-    type: "company",
-    sparkId: null,
-    entityId: null,
-    inn: 7710137066,
-    maxFullness: false,
-    inBusinessNews: false,
-  };
-  let search = histograms.searchContext.targetSearchEntitiesContext;
-
-  company.inn = inn ? Number(inn.replace(/\D/g, "")) : null;
+  company.inn = inn ? inn.replace(/\D/g, "") : "";
   company.maxFullness = formData.get("maxFullness") ? true : false;
-  company.inBusinessNews = formData.get("inBusinessNews") ? true : false;
+  company.inBusinessNews = formData.get("inBusinessNews") ? true : null;
   histograms.attributeFilters.excludeAnnouncements = formData.get(
     "excludeAnnouncements"
   )
@@ -43,18 +38,21 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
     ? false
     : true;
 
-  search.onlyMainRole = formData.get("onlyMainRole") ? true : false;
-
-  search.onlyWithRiskFactors = formData.get("onlyWithRiskFactors")
+  search.targetSearchEntitiesContext.onlyMainRole = formData.get("onlyMainRole")
     ? true
     : false;
 
-  search.tonality = formData.get("tonality") as string;
+  search.targetSearchEntitiesContext.onlyWithRiskFactors = formData.get(
+    "onlyWithRiskFactors"
+  )
+    ? true
+    : false;
 
-  (histograms.searchContext.targetSearchEntitiesContext.targetSearchEntities = [
-    company,
-  ]),
-    search;
+  search.targetSearchEntitiesContext.tonality = formData.get(
+    "tonality"
+  ) as string;
+
+  console.log(histograms);
 
   return histograms;
 }

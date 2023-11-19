@@ -1,0 +1,66 @@
+@import "../../../../vars.scss";
+.carousel {
+  width: 83rem;
+  height: 158px;
+
+  border-radius: 10px 0px 0px 10px;
+  background: $main-color-1;
+  h2 {
+    color: $main-color-2;
+    font-family: Ferry;
+    font-size: 2.8125rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: 0.02813rem;
+    margin-bottom: 4rem;
+  }
+  p {
+    font-family: Inter;
+    font-size: 1.25rem;
+  }
+  .cards {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    .button_left {
+      background-color: #ffffff00;
+      width: 2.5rem;
+      height: 2.5rem;
+      cursor: pointer;
+    }
+    .card {
+      width: 9rem;
+      height: 153px;
+      color: $main-color-2;
+      border-radius: 0.625rem;
+      background: #fff;
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+      img {
+        margin-top: 1.35rem;
+        margin-left: 1.25rem;
+      }
+      p {
+        margin-top: 0.75rem;
+        margin-left: 1.2rem;
+        width: 19.5625rem;
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.01125rem;
+      }
+    }
+    .button_right {
+      background-color: #ffffff00;
+      width: 2.5rem;
+      height: 2.5rem;
+
+      cursor: pointer;
+      img {
+        rotate: 180deg;
+      }
+    }
+  }
+}
