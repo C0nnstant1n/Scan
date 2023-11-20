@@ -1,102 +1,121 @@
-import { histogramsApi } from "../../../redux/HistogramSevice";
+import { scanApi } from "../../../redux/HistogramSevice";
 import { Ihistograms } from "../../../api/histograms_interface";
 interface IpropsDataform {
   formData: Ihistograms;
 }
 import { useEffect } from "react";
 import Carousel from "./components/carousel";
+import { IDocRequest } from "../../../api/doc_interfaces";
+import DocumentCard from "./components/documentcard";
+import styles from "./result.module.scss";
+import searchImg from "../../../assets/searh_img.svg";
+import spinnerIco from "../../../assets/spinner-ico.svg";
 
 export default function SearchResult(props: IpropsDataform) {
-  const [searhHistograms, { data, error, isLoading }] =
-    histogramsApi.useSearchHistogramsMutation();
+  const [
+    searhHistograms,
+    {
+      data: histogramsData,
+      error: histogramsError,
+      isLoading: histogrmsLoading,
+    },
+  ] = scanApi.useSearchHistogramsMutation();
+
+  const [objectSearch, { data: scanData }] = scanApi.useObjectSearchMutation();
 
   const getHistograms = async () => {
     await searhHistograms({ ...props.formData });
   };
 
-  // useEffect(() => {
-  //   getHistograms();
-  // }, []);
-
-  const resp = {
-    data: [
-      {
-        data: [
-          {
-            date: "2023-05-01T03:00:00+03:00",
-            value: 2,
-          },
-          {
-            date: "2023-09-01T03:00:00+03:00",
-            value: 3,
-          },
-          {
-            date: "2023-03-01T03:00:00+03:00",
-            value: 2,
-          },
-          {
-            date: "2022-12-01T03:00:00+03:00",
-            value: 6,
-          },
-          {
-            date: "2023-10-01T03:00:00+03:00",
-            value: 5,
-          },
-          {
-            date: "2023-04-01T03:00:00+03:00",
-            value: 2,
-          },
-        ],
-        histogramType: "totalDocuments",
-      },
-      {
-        data: [
-          {
-            date: "2023-05-01T03:00:00+03:00",
-            value: 0,
-          },
-          {
-            date: "2023-09-01T03:00:00+03:00",
-            value: 0,
-          },
-          {
-            date: "2023-03-01T03:00:00+03:00",
-            value: 0,
-          },
-          {
-            date: "2022-12-01T03:00:00+03:00",
-            value: 0,
-          },
-          {
-            date: "2023-10-01T03:00:00+03:00",
-            value: 0,
-          },
-          {
-            date: "2023-04-01T03:00:00+03:00",
-            value: 0,
-          },
-        ],
-        histogramType: "riskFactors",
-      },
-    ],
+  const getObject = async () => {
+    await objectSearch({ ...props.formData });
   };
 
-  // console.log(props.formData);
+  useEffect(() => {
+    getHistograms();
+    getObject();
+  }, []);
 
-  // console.log(data);
-  // console.log(data?.data[0].histogramType);
+  const [getDocs, { data: docsData, isLoading: docsLoading }] =
+    scanApi.useDocumentSearchMutation();
+
+  const getDoc = async (docsId: IDocRequest) => {
+    await getDocs(docsId);
+  };
+
+  let request: IDocRequest = { ids: [] };
+  let docsFinded = 0;
+  if (scanData) {
+    docsFinded = scanData.items.length;
+    for (let index = 0; index < 10; index++) {
+      request.ids.push(scanData.items[index].encodedId);
+    }
+  }
+  let totalDocuments = 0;
+  if (histogramsData) {
+    histogramsData?.data[0].data.map((value) => {
+      totalDocuments += value.value;
+    });
+  }
+
+  useEffect(() => {
+    if (request.ids.length > 0 && !docsLoading) {
+      // console.log(request);
+      getDocs(request);
+    }
+  }, [scanData]);
 
   return (
     <>
-      <div className='result'>
-        <h1> Ищем. Скоро будут результы</h1>
-        <p>Поиск может занять некоторое время, просим сохранять терпение.</p>
-        {isLoading && <h2>Данные загружаются</h2>}
-        {error && <h2>Произошла ошибка при запросе</h2>}
-        <div className='summary'>
+      <div className={styles.result}>
+        <div className={styles.result__top}></div>
+        <div className={styles.top__content}>
+          <div className={styles.content__text}>
+            <h1> Ищем. Скоро будут результы</h1>
+            <br />
+            <p>
+              Поиск может занять некоторое время, просим сохранять терпение.
+            </p>
+          </div>
+          <div className={styles.content__img}>
+            <img src={searchImg} alt='Картинка поиск' />
+          </div>
+        </div>
+
+        <div className={styles.summary}>
           <h2>Общая сводка</h2>
-          <p>Найдено {resp?.data[0].data.length}</p>
-          {resp ? <Carousel data={resp.data} /> : <h2>Loading...</h2>}
+          <p>Найдено {totalDocuments} документов</p>
+          <br />
+          <div className={styles.summary__frame}>
+            <div className={styles.frame__background}>
+              {histogramsData ? (
+                <Carousel data={histogramsData.data} />
+              ) : (
+                <div className={styles.loading}>
+                  <img src={spinnerIco} alt='' />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className={styles.docs_list}>
+          <h2>список документов</h2>
+          <div className={styles.docs_list__wrapper}>
+            {docsData ? (
+              <>
+                {docsData.map((item) => {
+                  return <DocumentCard requestItem={item} key={item.ok.id} />;
+                })}
+              </>
+            ) : (
+              <div className={styles.loading}>
+                <img src={spinnerIco} alt='' />
+              </div>
+            )}
+          </div>
+          <div className={styles.doc_list__button}>
+            <button onClick={() => getDoc(request)}>Показать больше</button>
+          </div>
         </div>
       </div>
     </>

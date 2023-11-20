@@ -1,10 +1,9 @@
 @import "../../../../vars.scss";
 .carousel {
-  width: 83rem;
   height: 158px;
+  display: flex;
+  align-items: center;
 
-  border-radius: 10px 0px 0px 10px;
-  background: $main-color-1;
   h2 {
     color: $main-color-2;
     font-family: Ferry;
@@ -19,48 +18,57 @@
     font-family: Inter;
     font-size: 1.25rem;
   }
+  .button_left {
+    background-color: #ffffff00;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    margin-left: -3rem;
+    // img {
+    //   margin-top: 1.35rem;
+    //   margin-left: 1.25rem;
+    // }
+  }
+  .carousel__legenda {
+    width: 133px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: -4px;
+    color: $main-color-3;
+  }
   .cards {
+    width: 1127px;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    height: 100%;
-    .button_left {
-      background-color: #ffffff00;
-      width: 2.5rem;
-      height: 2.5rem;
-      cursor: pointer;
-    }
+    justify-content: flex-start;
+    height: 153px;
+    border-radius: 0.625rem;
+    // margin-left: -12px;
+    background-color: $main-color-3;
+
     .card {
       width: 9rem;
-      height: 153px;
-      color: $main-color-2;
-      border-radius: 0.625rem;
-      background: #fff;
-      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
-      img {
-        margin-top: 1.35rem;
-        margin-left: 1.25rem;
-      }
-      p {
-        margin-top: 0.75rem;
-        margin-left: 1.2rem;
-        width: 19.5625rem;
-        font-size: 1.125rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        letter-spacing: 0.01125rem;
-      }
-    }
-    .button_right {
-      background-color: #ffffff00;
-      width: 2.5rem;
-      height: 2.5rem;
+      height: 100%;
 
-      cursor: pointer;
-      img {
-        rotate: 180deg;
-      }
+      color: $main-color-2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  }
+  .button_right {
+    background-color: #ffffff00;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: -3rem;
+
+    cursor: pointer;
+    img {
+      rotate: 180deg;
     }
   }
 }

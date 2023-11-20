@@ -4,8 +4,17 @@ import styles from "./carousel.module.scss";
 import icon from "../../../../assets/icons8-шеврон-вправо-90 1.svg";
 import { IhistogramsResponce } from "../../../../api/histograms_interface";
 
-export default function Carousel(props: IhistogramsResponce) {
-  let carouselList = [];
+interface Icard {
+  period: string;
+  totalDocuments: number;
+  riskFactors: number;
+}
+
+export default function Carousel({ data }: IhistogramsResponce[]) {
+  let carouselList: Icard[] = [];
+  let list: number[] = [];
+  // console.log(data);
+
   let monthArray = [
     "Январь",
     "Февраль",
@@ -21,25 +30,24 @@ export default function Carousel(props: IhistogramsResponce) {
     "Декабрь",
   ];
 
-  for (let i in props.data[0].data) {
-    let card = {
-      period: props.data[0].data[i].date,
-      totalDocuments: props.data[0].data[i].value,
-      riskFactors: props.data[1].data[1].value,
+  for (let i in data[0].data) {
+    let card: Icard = {
+      period: data[0].data[i].date,
+      totalDocuments: data[0].data[i].value,
+      riskFactors: data[1].data[1].value,
     };
     carouselList.push(card);
   }
   // сортируем наш список по дате
   carouselList.sort((a, b) => {
-    return new Date(a["period"]) - new Date(b["period"]);
+    return Number(new Date(a["period"])) - Number(new Date(b["period"]));
   });
   // форматируем дату
   carouselList.map((period) => {
     const date = new Date(period.period);
     period.period = `${monthArray[date.getMonth()]} ${date.getFullYear()}`;
   });
-
-  let list: number[] = [];
+  list = [];
   for (let i in carouselList) {
     list.push(Number(i));
   }
@@ -55,7 +63,6 @@ export default function Carousel(props: IhistogramsResponce) {
         : (newList[index] = value);
     });
     setIndexes(newList);
-    // console.log(newList);
   }
 
   function nextCard() {
@@ -70,26 +77,29 @@ export default function Carousel(props: IhistogramsResponce) {
   }
   return (
     <div className={styles.carousel}>
-      <div className={styles.cards}>
-        <button className={styles.button_left} onClick={prevCard}>
-          <img src={icon} alt='prev' />
-        </button>
-        <div className='legenda'>
-          <p>Период</p>
-          <p>Всего</p>
-          <p>Риски</p>
-        </div>
-        <Card carouselList={carouselList[indexes[0]]} />
-        <Card carouselList={carouselList[indexes[1]]} />
-        <Card carouselList={carouselList[indexes[2]]} />
-        <Card carouselList={carouselList[indexes[3]]} />
-        <Card carouselList={carouselList[indexes[4]]} />
-        <Card carouselList={carouselList[indexes[5]]} />
-
-        <button className={styles.button_right} onClick={nextCard}>
-          <img src={icon} alt='next' />
-        </button>
+      <button className={styles.button_left} onClick={prevCard}>
+        <img src={icon} alt='prev' />
+      </button>
+      <div className={styles.carousel__legenda}>
+        <p>Период</p>
+        <p>Всего</p>
+        <p>Риски</p>
       </div>
+      <div className={styles.cards}>
+        {indexes.length > 0 ? (
+          <>
+            <Card carouselList={carouselList[indexes[0]]} />
+            <Card carouselList={carouselList[indexes[1]]} />
+            <Card carouselList={carouselList[indexes[2]]} />
+            <Card carouselList={carouselList[indexes[3]]} />
+            <Card carouselList={carouselList[indexes[4]]} />
+            <Card carouselList={carouselList[indexes[5]]} />
+          </>
+        ) : null}
+      </div>
+      <button className={styles.button_right} onClick={nextCard}>
+        <img src={icon} alt='next' />
+      </button>
     </div>
   );
 }

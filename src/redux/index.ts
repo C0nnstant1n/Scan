@@ -1,16 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authorizeSlice from "./authorizeSlice";
-import { histogramsApi } from "./HistogramSevice";
+import { scanApi } from "./HistogramSevice";
 
 const rootReducer = combineReducers({
   toolkit: authorizeSlice,
-  [histogramsApi.reducerPath]: histogramsApi.reducer,
+  [scanApi.reducerPath]: scanApi.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(histogramsApi.middleware),
+    getDefaultMiddleware().concat(scanApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

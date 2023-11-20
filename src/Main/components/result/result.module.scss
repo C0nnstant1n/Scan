@@ -1,0 +1,97 @@
+@import "../../../vars.scss";
+.result {
+  width: 84rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h1 {
+    font-family: Ferry;
+    font-size: 2.5rem;
+  }
+  h2 {
+    margin: 20px 0;
+    font-family: Ferry;
+    font-size: 1.875rem;
+  }
+  .top__content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .content__text {
+      width: 32rem;
+      font-size: 1.25rem;
+    }
+    .content__img {
+    }
+  }
+  .summary {
+    width: 100%;
+    p {
+      font-size: 1.125rem;
+    }
+    .summary__frame {
+      display: flex;
+      justify-content: center;
+      .frame__background {
+        height: 158px;
+        width: 78.75rem;
+        border-radius: 0.625rem;
+        background: $main-color-1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+.loading {
+  height: 154px;
+  width: 78.5rem;
+  background-color: $main-color-3;
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 4rem;
+    animation-name: rotation;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
+.docs_list {
+  width: 84rem;
+
+  .docs_list__wrapper {
+    margin: 38px 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+  }
+  .doc_list__button {
+    height: 12.8rem;
+    display: flex;
+    justify-content: center;
+
+    button {
+      width: 19.0625rem;
+      height: 3.6875rem;
+      margin-top: 3rem;
+      border-radius: 0.3125rem;
+      background: $additional-color-3;
+      color: $main-color-3;
+      font-size: 1.375rem;
+    }
+  }
+}
