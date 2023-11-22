@@ -12,15 +12,17 @@
   .document_card__wrapper {
     position: relative;
     width: 581px;
+
     .document_card___header {
       width: 100%;
-      display: flex;
-      align-content: center;
-      justify-content: flex-start;
-      flex-wrap: wrap;
+      height: 1.2rem;
+      display: -webkit-box;
+      -webkit-box-orient: horizontal;
       margin: 19px 0;
       font-size: 1rem;
       color: #949494;
+      overflow: hidden;
+
       a {
         margin-left: 1rem;
         color: #949494;
@@ -29,34 +31,37 @@
     .document_card__content {
       width: 100%;
       h2 {
+        margin: 2px 0;
+        height: 8rem;
         font-size: 1.625rem;
-        margin-bottom: 14px;
+        overflow: hidden;
       }
-      .content__tag {
-        width: 157px;
-        height: 22px;
-        border-radius: 5px;
-        background: $additional-color-2;
-        font-size: 0.75rem;
+      .content__tags {
         display: flex;
-        align-content: center;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .content__img {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        .img_wrapper {
-          margin: 20px 0;
-          width: 581px;
-          height: 158px;
-          border-radius: 10px;
-          background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+        height: 1.4rem;
+        gap: 1rem;
+        .content__tag {
+          padding: 0.3rem 1.5rem;
+          border-radius: 5px;
+          background: $additional-color-2;
+          font-size: 0.75rem;
         }
       }
-      p {
-        width: 581px;
+
+      .content__img {
+        width: 100%;
+        margin: 1rem 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 158px;
+        border-radius: 10px;
+      }
+      .content__text {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 10;
       }
     }
   }
@@ -66,14 +71,25 @@
     top: 617px;
     display: flex;
     justify-content: space-between;
-    button {
+    a {
+      color: $main-color-2;
+      text-decoration: none;
+    }
+    .document_card__link_button {
       margin: 0;
-      width: 223px;
-      height: 47px;
+      // width: 223px;
+      // height: 47px;
       border-radius: 5px;
       background: $additional-color-1;
       font-size: 1rem;
+      text-align: center;
+      padding: 1rem 2rem;
+
       cursor: pointer;
+      &:hover {
+        background-color: #c1f0ef;
+        text-decoration: none;
+      }
     }
     p {
       display: flex;

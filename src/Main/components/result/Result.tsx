@@ -5,21 +5,18 @@ interface IpropsDataform {
 }
 import { useEffect } from "react";
 import Carousel from "./components/carousel";
-import { IDocRequest } from "../../../api/doc_interfaces";
+import { IDocRequest, IDocResponse } from "../../../api/doc_interfaces";
 import DocumentCard from "./components/documentcard";
 import styles from "./result.module.scss";
 import searchImg from "../../../assets/searh_img.svg";
 import spinnerIco from "../../../assets/spinner-ico.svg";
+import { useState } from "react";
+let a = 0;
+let b: IDocResponse[] = [];
 
 export default function SearchResult(props: IpropsDataform) {
-  const [
-    searhHistograms,
-    {
-      data: histogramsData,
-      error: histogramsError,
-      isLoading: histogrmsLoading,
-    },
-  ] = scanApi.useSearchHistogramsMutation();
+  const [searhHistograms, { data: histogramsData }] =
+    scanApi.useSearchHistogramsMutation();
 
   const [objectSearch, { data: scanData }] = scanApi.useObjectSearchMutation();
 
@@ -44,13 +41,20 @@ export default function SearchResult(props: IpropsDataform) {
   };
 
   let request: IDocRequest = { ids: [] };
-  let docsFinded = 0;
+  let docsFindedCount = 0;
+  const [indexOfReading, setIndexOfReading] = useState(a);
+  // console.log("state index - ", indexOfReading);
   if (scanData) {
-    docsFinded = scanData.items.length;
-    for (let index = 0; index < 10; index++) {
+    docsFindedCount = scanData.items.length;
+    for (
+      let index = indexOfReading;
+      index < indexOfReading + 10 && index < docsFindedCount;
+      index++
+    ) {
       request.ids.push(scanData.items[index].encodedId);
     }
   }
+
   let totalDocuments = 0;
   if (histogramsData) {
     histogramsData?.data[0].data.map((value) => {
@@ -58,12 +62,32 @@ export default function SearchResult(props: IpropsDataform) {
     });
   }
 
+  const [loadedDocs, setLoadedDocs] = useState(b);
+  // загружаем первые 10 документов
   useEffect(() => {
     if (request.ids.length > 0 && !docsLoading) {
-      // console.log(request);
-      getDocs(request);
+      getDoc(request);
     }
   }, [scanData]);
+
+  // загружаем следующую 10ку документов
+  useEffect(() => {
+    // console.log("state change - ", indexOfReading);
+    if (request.ids.length) {
+      getDoc(request);
+    }
+  }, [indexOfReading]);
+
+  useEffect(() => {
+    if (docsData) {
+      loadedDocs.length
+        ? setLoadedDocs(loadedDocs.concat(docsData))
+        : setLoadedDocs(docsData);
+    }
+  }, [docsData]);
+
+  const buttonDisable = () =>
+    docsFindedCount == loadedDocs.length ? { display: "none" } : undefined;
 
   return (
     <>
@@ -101,20 +125,18 @@ export default function SearchResult(props: IpropsDataform) {
         <div className={styles.docs_list}>
           <h2>список документов</h2>
           <div className={styles.docs_list__wrapper}>
-            {docsData ? (
+            {loadedDocs && (
               <>
-                {docsData.map((item) => {
+                {loadedDocs.map((item) => {
                   return <DocumentCard requestItem={item} key={item.ok.id} />;
                 })}
               </>
-            ) : (
-              <div className={styles.loading}>
-                <img src={spinnerIco} alt='' />
-              </div>
             )}
           </div>
-          <div className={styles.doc_list__button}>
-            <button onClick={() => getDoc(request)}>Показать больше</button>
+          <div className={styles.doc_list__button} style={buttonDisable()}>
+            <button onClick={() => setIndexOfReading(indexOfReading + 10)}>
+              Показать больше
+            </button>
           </div>
         </div>
       </div>

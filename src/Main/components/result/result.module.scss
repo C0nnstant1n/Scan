@@ -92,6 +92,10 @@
       background: $additional-color-3;
       color: $main-color-3;
       font-size: 1.375rem;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
 }

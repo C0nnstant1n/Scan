@@ -6,11 +6,14 @@ import { IhistogramsResponce } from "../../../../api/histograms_interface";
 
 interface Icard {
   period: string;
-  totalDocuments: number;
-  riskFactors: number;
+  totalDocuments: number | null;
+  riskFactors: number | null;
+}
+interface Idata {
+  data: IhistogramsResponce;
 }
 
-export default function Carousel({ data }: IhistogramsResponce[]) {
+export default function Carousel({ data }: Idata[]) {
   let carouselList: Icard[] = [];
   let list: number[] = [];
   // console.log(data);
@@ -38,6 +41,7 @@ export default function Carousel({ data }: IhistogramsResponce[]) {
     };
     carouselList.push(card);
   }
+
   // сортируем наш список по дате
   carouselList.sort((a, b) => {
     return Number(new Date(a["period"])) - Number(new Date(b["period"]));
@@ -48,10 +52,24 @@ export default function Carousel({ data }: IhistogramsResponce[]) {
     period.period = `${monthArray[date.getMonth()]} ${date.getFullYear()}`;
   });
   list = [];
+  // добавляем пустые карточки, если их не хватает
+  if (carouselList.length <= 8) {
+    for (let i = 0; i <= 8 - carouselList.length; i++) {
+      let card: Icard = {
+        period: "",
+        totalDocuments: null,
+        riskFactors: null,
+      };
+      carouselList.push(card);
+    }
+  }
+
   for (let i in carouselList) {
     list.push(Number(i));
   }
 
+  // console.log(carouselList);
+  // console.log(list);
   const [indexes, setIndexes] = useState(list);
 
   function prevCard() {
@@ -94,6 +112,8 @@ export default function Carousel({ data }: IhistogramsResponce[]) {
             <Card carouselList={carouselList[indexes[3]]} />
             <Card carouselList={carouselList[indexes[4]]} />
             <Card carouselList={carouselList[indexes[5]]} />
+            <Card carouselList={carouselList[indexes[6]]} />
+            <Card carouselList={carouselList[indexes[7]]} />
           </>
         ) : null}
       </div>
