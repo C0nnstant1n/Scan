@@ -1,9 +1,5 @@
-import { redirect, type LoaderFunctionArgs } from "react-router-dom";
+import type { LoaderFunctionArgs } from "react-router-dom";
 import { histograms } from "./histograms_interface";
-// import axios from "axios";
-// import { histogramsURL, mainURL } from "./vars";
-// import { AppDispatch } from "../redux";
-// import histogramsSlice from "../redux/histogramsSlice";
 
 export default async function searchAction({ request }: LoaderFunctionArgs) {
   let formData = await request.formData();
@@ -52,7 +48,7 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
     "tonality"
   ) as string;
 
-  console.log(histograms);
+  // console.log(histograms);
 
   return histograms;
 }

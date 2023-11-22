@@ -6,6 +6,7 @@ import avatar from "../assets/avatar.png";
 import spinner from "../assets/spinner-ico.svg";
 import { authorize, login } from "../redux/authorizeSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import PopUp from "./popup";
 
 interface IAccountInfo {
   eventFiltersInfo: {
@@ -40,14 +41,34 @@ export default function Header() {
       setInfo(response);
     });
   }
+  const [isPopUp, setPopUp] = useState(false);
+
+  const handlePopUp = () => {
+    setPopUp(true);
+  };
 
   return (
     <>
       <header className={styles.header}>
+        {isPopUp ? <PopUp user={user} /> : null}
+
         <div className={styles.logo}>
           {/* <img className={styles.logo_img} alt='Logo' src={logo} /> */}
         </div>
 
+        <div className={styles.nav_button} onClick={handlePopUp}>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='30'
+            height='25'
+            viewBox='0 0 30 25'
+            fill='none'
+          >
+            <rect width='30' height='5' fill='#029491' />
+            <rect y='10' width='30' height='5' fill='#029491' />
+            <rect y='20' width='30' height='5' fill='#029491' />
+          </svg>
+        </div>
         <div className={styles.navbar}>
           <nav>
             <ul>

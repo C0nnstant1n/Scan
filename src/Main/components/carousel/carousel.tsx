@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "./cards";
 import styles from "./carousel.module.scss";
 import icon from "../../../assets/icons8-шеврон-вправо-90 1.svg";
@@ -11,6 +11,15 @@ for (let i in carouselList) {
 
 export default function Carousel() {
   const [indexes, setIndexes] = useState(list);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   function prevCard() {
     const newList: number[] = [];
@@ -42,11 +51,15 @@ export default function Carousel() {
         <button className={styles.button_left} onClick={prevCard}>
           <img src={icon} alt='prev' />
         </button>
-
-        <Card carouselList={carouselList[indexes[0]]} />
-        <Card carouselList={carouselList[indexes[1]]} />
-        <Card carouselList={carouselList[indexes[2]]} />
-
+        {width > 600 ? (
+          <>
+            <Card carouselList={carouselList[indexes[0]]} />
+            <Card carouselList={carouselList[indexes[1]]} />
+            <Card carouselList={carouselList[indexes[2]]} />
+          </>
+        ) : (
+          <Card carouselList={carouselList[indexes[0]]} />
+        )}
         <button className={styles.button_right} onClick={nextCard}>
           <img src={icon} alt='next' />
         </button>

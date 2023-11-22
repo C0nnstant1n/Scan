@@ -15,10 +15,15 @@ let a = 0;
 let b: IDocResponse[] = [];
 
 export default function SearchResult(props: IpropsDataform) {
-  const [searhHistograms, { data: histogramsData }] =
-    scanApi.useSearchHistogramsMutation();
+  // console.log(props);
 
-  const [objectSearch, { data: scanData }] = scanApi.useObjectSearchMutation();
+  const [
+    searhHistograms,
+    { data: histogramsData, isSuccess: histogramSuccess },
+  ] = scanApi.useSearchHistogramsMutation();
+
+  const [objectSearch, { data: scanData, isSuccess: objectSuccess }] =
+    scanApi.useObjectSearchMutation();
 
   const getHistograms = async () => {
     await searhHistograms({ ...props.formData });
@@ -29,6 +34,8 @@ export default function SearchResult(props: IpropsDataform) {
   };
 
   useEffect(() => {
+    // console.log("запрос гистограмм");
+
     getHistograms();
     getObject();
   }, []);
@@ -56,7 +63,9 @@ export default function SearchResult(props: IpropsDataform) {
   }
 
   let totalDocuments = 0;
-  if (histogramsData) {
+  if (histogramsData?.data.length) {
+    // console.log(histogramsData);
+
     histogramsData?.data[0].data.map((value) => {
       totalDocuments += value.value;
     });
@@ -65,6 +74,8 @@ export default function SearchResult(props: IpropsDataform) {
   const [loadedDocs, setLoadedDocs] = useState(b);
   // загружаем первые 10 документов
   useEffect(() => {
+    // console.log("загружаем первые 10 документов");
+
     if (request.ids.length > 0 && !docsLoading) {
       getDoc(request);
     }
@@ -72,13 +83,15 @@ export default function SearchResult(props: IpropsDataform) {
 
   // загружаем следующую 10ку документов
   useEffect(() => {
-    // console.log("state change - ", indexOfReading);
+    // console.log("загружаем следующую 10ку документов");
     if (request.ids.length) {
       getDoc(request);
     }
   }, [indexOfReading]);
 
   useEffect(() => {
+    // console.log("дорисовываем документы");
+
     if (docsData) {
       loadedDocs.length
         ? setLoadedDocs(loadedDocs.concat(docsData))
@@ -124,6 +137,12 @@ export default function SearchResult(props: IpropsDataform) {
         </div>
         <div className={styles.docs_list}>
           <h2>список документов</h2>
+          {histogramSuccess &&
+            objectSuccess &&
+            !loadedDocs.length &&
+            !docsLoading && (
+              <h1>Извените, по вашему запросу ничего не найдено</h1>
+            )}
           <div className={styles.docs_list__wrapper}>
             {loadedDocs && (
               <>
@@ -134,9 +153,15 @@ export default function SearchResult(props: IpropsDataform) {
             )}
           </div>
           <div className={styles.doc_list__button} style={buttonDisable()}>
-            <button onClick={() => setIndexOfReading(indexOfReading + 10)}>
-              Показать больше
-            </button>
+            {docsLoading ? (
+              <div className={styles.loading}>
+                <img src={spinnerIco} alt='' />
+              </div>
+            ) : (
+              <button onClick={() => setIndexOfReading(indexOfReading + 10)}>
+                Показать больше
+              </button>
+            )}
           </div>
         </div>
       </div>

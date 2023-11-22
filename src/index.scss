@@ -14,7 +14,7 @@ html,
 body {
   height: 100%;
   font-family: Inter;
-  min-width: 90rem;
+  width: 90rem;
 }
 
 .root {
@@ -41,6 +41,21 @@ body {
     }
     p {
       margin: 2rem;
+    }
+  }
+}
+@media (max-width: 600px) {
+  html,
+  body {
+    width: 100vw;
+  }
+  .root {
+    width: 100vw;
+    main {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 }

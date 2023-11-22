@@ -1,7 +1,7 @@
 @import "../vars.scss";
 footer {
   color: $main-color-3;
-  min-width: 90rem;
+  width: 90rem;
 
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
@@ -27,6 +27,20 @@ footer {
     }
     .copyright {
       font-size: 0.75rem;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .footer {
+    width: 100vw;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "logo contacts";
+    .logo {
+      width: 6.9375rem;
+      height: 6.9375rem;
+      background-size: 100%;
+      background-position: center center;
+      margin-left: 1rem;
     }
   }
 }

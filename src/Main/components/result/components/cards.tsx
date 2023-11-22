@@ -1,20 +1,25 @@
 import style from "./carousel.module.scss";
 import rectangle from "../../../../assets/Rectangle 36.svg";
-// interface Props {
-//   carouselList: IcarouselList;
-// }
+import { Icard } from "./carousel";
+import { FC } from "react";
 
-export default function Card({ carouselList }) {
-  // console.log(carouselList);
+interface IProps {
+  card: Icard;
+}
+
+const Card: FC<IProps> = ({ card }) => {
+  // console.log(card);
 
   return (
     <>
       <div className={style.card}>
-        <p>{carouselList.period}</p>
-        <p>{carouselList.totalDocuments}</p>
-        <p>{carouselList.riskFactors}</p>
+        <p>{card.period && card.period}</p>
+        <p>{card.totalDocuments}</p>
+        <p>{card.riskFactors}</p>
       </div>
       <img src={rectangle} alt='Разделитель' />
     </>
   );
-}
+};
+
+export default Card;

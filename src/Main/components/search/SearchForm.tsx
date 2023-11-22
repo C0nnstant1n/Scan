@@ -70,8 +70,8 @@ export default function SearchForm() {
           <br />
           <select name='tonality' id='TONE'>
             <option value='any'>Любая</option>
-            <option value='positiv'>Позитивная</option>
-            <option value='negativ'>Негативная</option>
+            <option value='positive'>Позитивная</option>
+            <option value='negative'>Негативная</option>
           </select>
           <p style={{ visibility: "hidden" }}>hide </p>
         </label>

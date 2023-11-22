@@ -1,0 +1,47 @@
+@import "../vars.scss";
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .logo_img {
+    width: 100px;
+    height: 100px;
+    margin-left: 1rem;
+    background-image: url(src/assets/logo-gray.svg);
+    background-size: cover;
+  }
+  .button {
+    margin-right: 1.5rem;
+  }
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+
+  .navig {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    ul {
+      margin: 0;
+      color: $main-color-3;
+      width: 4rem;
+      height: 7rem;
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      a {
+        color: $main-color-3;
+        text-decoration: none;
+      }
+      li {
+        margin: 1rem 0;
+      }
+    }
+  }
+}

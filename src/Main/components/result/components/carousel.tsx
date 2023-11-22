@@ -3,19 +3,20 @@ import Card from "./cards";
 import styles from "./carousel.module.scss";
 import icon from "../../../../assets/icons8-шеврон-вправо-90 1.svg";
 import { IhistogramsResponce } from "../../../../api/histograms_interface";
+import { FC } from "react";
 
-interface Icard {
+export interface Icard {
   period: string;
   totalDocuments: number | null;
   riskFactors: number | null;
 }
 interface Idata {
-  data: IhistogramsResponce;
+  data: IhistogramsResponce[];
 }
 
-export default function Carousel({ data }: Idata[]) {
-  let carouselList: Icard[] = [];
+const Carousel: FC<Idata> = ({ data }) => {
   let list: number[] = [];
+  let carouselList: Icard[] = [];
   // console.log(data);
 
   let monthArray = [
@@ -33,28 +34,35 @@ export default function Carousel({ data }: Idata[]) {
     "Декабрь",
   ];
 
-  for (let i in data[0].data) {
-    let card: Icard = {
-      period: data[0].data[i].date,
-      totalDocuments: data[0].data[i].value,
-      riskFactors: data[1].data[1].value,
-    };
-    carouselList.push(card);
+  if (data.length) {
+    // console.log(data.length);
+
+    for (let i in data[0].data) {
+      let card: Icard = {
+        period: data[0].data[i].date,
+        totalDocuments: data[0].data[i].value,
+        riskFactors: data[1].data[1].value,
+      };
+      carouselList.push(card);
+    }
   }
 
-  // сортируем наш список по дате
-  carouselList.sort((a, b) => {
-    return Number(new Date(a["period"])) - Number(new Date(b["period"]));
-  });
-  // форматируем дату
-  carouselList.map((period) => {
-    const date = new Date(period.period);
-    period.period = `${monthArray[date.getMonth()]} ${date.getFullYear()}`;
-  });
-  list = [];
+  if (data.length) {
+    // сортируем наш список по дате
+    carouselList.sort((a, b) => {
+      return Number(new Date(a["period"])) - Number(new Date(b["period"]));
+    });
+    // форматируем дату
+    carouselList.map((period) => {
+      const date = new Date(period.period);
+      period.period = `${monthArray[date.getMonth()]} ${date.getFullYear()}`;
+    });
+    list = [];
+  }
+
   // добавляем пустые карточки, если их не хватает
-  if (carouselList.length <= 8) {
-    for (let i = 0; i <= 8 - carouselList.length; i++) {
+  if (carouselList.length <= 9) {
+    for (let i = 0; i <= 9 - carouselList.length; i++) {
       let card: Icard = {
         period: "",
         totalDocuments: null,
@@ -63,13 +71,12 @@ export default function Carousel({ data }: Idata[]) {
       carouselList.push(card);
     }
   }
+  // console.log(carouselList);
 
   for (let i in carouselList) {
     list.push(Number(i));
   }
 
-  // console.log(carouselList);
-  // console.log(list);
   const [indexes, setIndexes] = useState(list);
 
   function prevCard() {
@@ -104,16 +111,16 @@ export default function Carousel({ data }: Idata[]) {
         <p>Риски</p>
       </div>
       <div className={styles.cards}>
-        {indexes.length > 0 ? (
+        {indexes.length && carouselList.length > 7 ? (
           <>
-            <Card carouselList={carouselList[indexes[0]]} />
-            <Card carouselList={carouselList[indexes[1]]} />
-            <Card carouselList={carouselList[indexes[2]]} />
-            <Card carouselList={carouselList[indexes[3]]} />
-            <Card carouselList={carouselList[indexes[4]]} />
-            <Card carouselList={carouselList[indexes[5]]} />
-            <Card carouselList={carouselList[indexes[6]]} />
-            <Card carouselList={carouselList[indexes[7]]} />
+            <Card card={carouselList[indexes[0]]} />
+            <Card card={carouselList[indexes[1]]} />
+            <Card card={carouselList[indexes[2]]} />
+            <Card card={carouselList[indexes[3]]} />
+            <Card card={carouselList[indexes[4]]} />
+            <Card card={carouselList[indexes[5]]} />
+            <Card card={carouselList[indexes[6]]} />
+            <Card card={carouselList[indexes[7]]} />
           </>
         ) : null}
       </div>
@@ -122,4 +129,6 @@ export default function Carousel({ data }: Idata[]) {
       </button>
     </div>
   );
-}
+};
+
+export default Carousel;

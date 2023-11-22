@@ -151,3 +151,23 @@
     }
   }
 }
+@media (max-width: 600px) {
+  .tariffs {
+    margin: 0;
+    align-items: center;
+    width: 96vw;
+    height: auto;
+    flex-direction: column;
+    h2 {
+      font-size: 1.75rem;
+    }
+    .cards {
+      margin: 2rem 0;
+      flex-direction: column;
+      .card {
+        width: 96vw;
+        margin: 1.3rem 0;
+      }
+    }
+  }
+}
