@@ -1,24 +1,21 @@
 @import "../vars.scss";
 
 .top_container {
-  margin: 2rem 0;
   display: flex;
   height: 38.75rem;
   color: $main-color-2;
+
   .heading {
     z-index: 1;
-    width: 46.4375rem;
+    width: 50vw;
     h1 {
-      font-family: Ferry;
+      font-family: Ferry, sans-serif;
       font-size: 3.75rem;
-      font-style: normal;
       font-weight: 900;
-      line-height: normal;
-      letter-spacing: 0.0375rem;
     }
     p {
       margin-top: 2rem;
-      width: 33.375rem;
+      max-width: 33.375rem;
       font-size: 1.25rem;
       font-style: normal;
       font-weight: 400;
@@ -26,10 +23,13 @@
       letter-spacing: 0.0125rem;
     }
     button {
-      margin-top: 4.37rem;
       width: 20.9375rem;
       height: 3.6875rem;
-      flex-shrink: 0;
+      position: relative;
+      top: 15%;
+      left: 50%;
+      z-index: 1;
+      transform: translate(-50%, -50%);
       border-radius: 0.3125rem;
       background: $additional-color-3;
       cursor: pointer;
@@ -45,51 +45,65 @@
   }
   .back_img {
     z-index: 0;
-    margin-left: -4rem;
     margin-top: 1.5rem;
-    width: 39.3125rem;
-    height: 37.0625rem;
+    img{
+      max-width: 40vw;
+      max-height: 37rem;
+      aspect-ratio: 1;
+
+    }
   }
 }
 .middle_img {
-  margin-top: 4rem;
-  height: 40rem;
+  img{
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .top_container {
+    height: 25rem;
+    .heading {
+
+      h1 {
+        font-size:2rem;
+      }
+    }
+  .back_img{
+    margin-left: 0;
+  }
+  }
+
 }
 
 @media (max-width: 600px) {
   .top_container {
+    height: 38.75rem;
     flex-direction: column;
     align-items: center;
     margin: 1.25rem 0;
     // width: 96vw;
     .heading {
-      width: 96vw;
+      width: 100%;
       h1 {
-        width: 96vw;
+        width: 100%;
         font-size: 1.75rem;
       }
       p {
-        width: 96vw;
+        width: 100%;
       }
       button {
-        margin-top: 0;
         margin: 2rem 0;
       }
     }
     .back_img {
-      width: 100vw;
       margin: 0;
       img {
-        width: 100vw;
+        width: 100%;
       }
     }
   }
   .middle_img {
     margin: 1rem 0;
-    width: 100vw;
-    height: auto;
-    img {
-      width: 100vw;
-    }
   }
 }

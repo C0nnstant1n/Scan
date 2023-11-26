@@ -12,6 +12,7 @@ import { store } from "./redux";
 import Search from "./Main/components/search/Search";
 import searchAction from "./Main/components/search/components/searchAction";
 import { protectedLoader } from "./Main/components/search/Search";
+import * as React from "react";
 
 const router = createBrowserRouter([
   {
@@ -36,11 +37,13 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Provider store={store}>
-    <Header />
-    <main>
-      <RouterProvider router={router} />
-    </main>
+  <React.StrictMode>
+    <Provider store={store}>
+      <Header />
+      <main>
+        <RouterProvider router={router} />
+      </main>
     <Footer />
-  </Provider>
+    </Provider>
+  </React.StrictMode>
 );

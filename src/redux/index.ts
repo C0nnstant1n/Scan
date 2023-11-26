@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authorizeSlice from "./authorizeSlice";
 import { scanApi } from "./HistogramSevice";
+import windowSlice from "./windowsize";
 
 const rootReducer = combineReducers({
   toolkit: authorizeSlice,
   [scanApi.reducerPath]: scanApi.reducer,
+  windowSize: windowSlice,
 });
 
 export const store = configureStore({

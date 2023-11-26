@@ -15,7 +15,7 @@ export default function Main() {
     <>
       <div className={styles.top_container}>
         <div className={styles.heading}>
-          <h1>сервис по поиску публикаций о компании по его ИНН</h1>
+          <h1>Cервис по поиску публикаций о компании по его ИНН</h1>
           <p>
             Комплексный анализ публикаций, получение данных в формате PDF на
             электронную почту.
@@ -31,9 +31,9 @@ export default function Main() {
         </div>
       </div>
       <Carousel />
-      <div className={styles.middle_img}>
+      <picture className={styles.middle_img}>
         <img src={middleImage} alt='image' />
-      </div>
+      </picture>
       <Tariffs />
     </>
   );

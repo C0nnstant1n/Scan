@@ -1,8 +1,7 @@
 @import "../vars.scss";
 
 header {
-  width: 90rem;
-  height: 5.8125rem;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
   grid-gap: 1vw;
@@ -12,9 +11,6 @@ header {
   color: $main-color-2;
   font-size: 0.875rem;
   font-weight: 400;
-  // position: sticky;
-  // top: 0;
-  // z-index: 1;
 
   %link {
     a {
@@ -150,13 +146,11 @@ header {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1100px) {
   header {
     margin: -16px 0;
-    width: 100vw;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "logo account-info account";
-    place-items: center;
     gap: 5vw;
 
     .popup {
@@ -185,9 +179,15 @@ header {
       display: block;
       grid-area: account;
       cursor: pointer;
+      justify-self: end;
+      margin-right: 1rem;
+    }
+    .account_info{
+      justify-self: center;
     }
     .account {
       display: none;
     }
+
   }
 }

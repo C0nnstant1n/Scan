@@ -1,25 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Card from "./cards";
 import styles from "./carousel.module.scss";
 import icon from "../../../assets/icons8-шеврон-вправо-90 1.svg";
 import carouselList from "./ListCards";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks.ts";
+import {setWidth} from "../../../redux/windowsize.ts";
 
-let list: number[] = [];
-for (let i in carouselList) {
+const list: number[] = [];
+for (const i in carouselList) {
   list.push(Number(i));
 }
 
 export default function Carousel() {
   const [indexes, setIndexes] = useState(list);
-  const [width, setWidth] = useState(window.innerWidth);
+  // const [width, setWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const windowWidth = useAppSelector((state) => state.windowSize.width)
+  const dispatch = useAppDispatch()
+
+
+  const handleResize = () => {
+    dispatch(setWidth(window.innerWidth))
+  }
+  window.addEventListener("resize", handleResize)
+
+
 
   function prevCard() {
     const newList: number[] = [];
@@ -51,15 +56,20 @@ export default function Carousel() {
         <button className={styles.button_left} onClick={prevCard}>
           <img src={icon} alt='prev' />
         </button>
-        {width > 600 ? (
+        {windowWidth > 1200 ? (
           <>
             <Card carouselList={carouselList[indexes[0]]} />
             <Card carouselList={carouselList[indexes[1]]} />
             <Card carouselList={carouselList[indexes[2]]} />
           </>
-        ) : (
-          <Card carouselList={carouselList[indexes[0]]} />
-        )}
+        ) : (windowWidth > 1000 ?(
+            <>
+              <Card carouselList={carouselList[indexes[0]]} />
+              <Card carouselList={carouselList[indexes[1]]} />
+            </>
+            ):(
+                <Card carouselList={carouselList[indexes[0]]} />
+        ))}
         <button className={styles.button_right} onClick={nextCard}>
           <img src={icon} alt='next' />
         </button>

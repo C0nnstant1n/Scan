@@ -32,8 +32,8 @@
     letter-spacing: 0.02813rem;
   }
   .cards {
-    margin-top: 4rem;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
 
@@ -55,6 +55,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 1rem;
       width: 26rem;
       height: 33.75rem;
       border-radius: 0.625rem;
@@ -95,9 +96,6 @@
         margin: 0;
         font-size: 0.875rem;
         padding-top: 0.175rem;
-      }
-      & {
-        background-color: #3ba5e0;
       }
     }
     .is_current_hide {
@@ -155,7 +153,6 @@
   .tariffs {
     margin: 0;
     align-items: center;
-    width: 96vw;
     height: auto;
     flex-direction: column;
     h2 {
@@ -165,7 +162,7 @@
       margin: 2rem 0;
       flex-direction: column;
       .card {
-        width: 96vw;
+        width: 25rem;
         margin: 1.3rem 0;
       }
     }
