@@ -14,7 +14,6 @@ html,
 body {
   height: 100%;
   font-family: Inter, sans-serif;
-
 }
 
 .root {
@@ -26,8 +25,6 @@ body {
     background-color: $main-color-3;
     width: 92vw;
     flex-grow: 1;
-
-
   }
 
   .error-page {
@@ -55,8 +52,8 @@ body {
     }
   }
 }
-@media (max-width: 900px){
-  h1{
+@media (max-width: 900px) {
+  h1 {
     font-size: 1rem;
   }
 }

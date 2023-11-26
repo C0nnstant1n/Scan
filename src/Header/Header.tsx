@@ -1,13 +1,12 @@
 import styles from "./header.module.scss";
 import separator from "../assets/separator.svg";
-import { useState} from "react";
+import { useState } from "react";
 import { AccountInfo } from "../api/account_requests";
 import avatar from "../assets/avatar.png";
 import spinner from "../assets/spinner-ico.svg";
 import { authorize, login } from "../redux/authorizeSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import PopUp from "./popup";
-
 
 interface IAccountInfo {
   eventFiltersInfo: {
@@ -49,13 +48,12 @@ export default function Header() {
     setPopUp(true);
   };
 
-
   return (
     <>
       <header className={styles.header}>
         {isPopUp ? <PopUp user={user} /> : null}
 
-        <picture className={styles.logo} >
+        <picture className={styles.logo}>
           {/* <img className={styles.logo_img} alt='Logo' src={logo} /> */}
         </picture>
 

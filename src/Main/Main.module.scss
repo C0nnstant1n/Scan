@@ -46,16 +46,15 @@
   .back_img {
     z-index: 0;
     margin-top: 1.5rem;
-    img{
+    img {
       max-width: 40vw;
       max-height: 37rem;
       aspect-ratio: 1;
-
     }
   }
 }
 .middle_img {
-  img{
+  img {
     max-width: 100%;
   }
 }
@@ -64,16 +63,14 @@
   .top_container {
     height: 25rem;
     .heading {
-
       h1 {
-        font-size:2rem;
+        font-size: 2rem;
       }
     }
-  .back_img{
-    margin-left: 0;
+    .back_img {
+      margin-left: 0;
+    }
   }
-  }
-
 }
 
 @media (max-width: 600px) {
