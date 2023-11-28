@@ -1,8 +1,5 @@
 import { scanApi } from "../../../redux/HistogramSevice";
-import { Ihistograms } from "../../../api/histograms_interface";
-interface IpropsDataform {
-  formData: Ihistograms;
-}
+import {IHistograms, IHistogramsResponse} from "../../../api/histograms_interface";
 import { useEffect } from "react";
 import Carousel from "./components/carousel";
 import { IDocRequest, IDocResponse } from "../../../api/doc_interfaces";
@@ -11,22 +8,28 @@ import styles from "./result.module.scss";
 import searchImg from "../../../assets/searh_img.svg";
 import spinnerIco from "../../../assets/spinner-ico.svg";
 import { useState } from "react";
-let a = 0;
-let b: IDocResponse[] = [];
 
-export default function SearchResult(props: IpropsDataform) {
+interface IPropsDataForm {
+  formData: IHistograms;
+}
+
+const count = 0;
+const response: IDocResponse[] = [];
+
+export default function SearchResult(props: IPropsDataForm) {
   // console.log(props);
 
   const [
-    searhHistograms,
+    searchHistograms,
     { data: histogramsData, isSuccess: histogramSuccess },
   ] = scanApi.useSearchHistogramsMutation();
 
-  const [objectSearch, { data: scanData, isSuccess: objectSuccess }] =
+  const [objectSearch,
+    { data: scanData, isSuccess: objectSuccess }] =
     scanApi.useObjectSearchMutation();
 
   const getHistograms = async () => {
-    await searhHistograms({ ...props.formData });
+    await searchHistograms({ ...props.formData });
   };
 
   const getObject = async () => {
@@ -35,7 +38,6 @@ export default function SearchResult(props: IpropsDataform) {
 
   useEffect(() => {
     // console.log("запрос гистограмм");
-
     getHistograms();
     getObject();
   }, []);
@@ -47,15 +49,15 @@ export default function SearchResult(props: IpropsDataform) {
     await getDocs(docsId);
   };
 
-  let request: IDocRequest = { ids: [] };
-  let docsFindedCount = 0;
-  const [indexOfReading, setIndexOfReading] = useState(a);
+  const request: IDocRequest = { ids: [] };
+  let docsFoundCount = 0;
+  const [indexOfReading, setIndexOfReading] = useState(count);
   // console.log("state index - ", indexOfReading);
   if (scanData) {
-    docsFindedCount = scanData.items.length;
+    docsFoundCount = scanData.items.length;
     for (
       let index = indexOfReading;
-      index < indexOfReading + 10 && index < docsFindedCount;
+      index < indexOfReading + 10 && index < docsFoundCount;
       index++
     ) {
       request.ids.push(scanData.items[index].encodedId);
@@ -71,8 +73,8 @@ export default function SearchResult(props: IpropsDataform) {
     });
   }
 
-  const [loadedDocs, setLoadedDocs] = useState(b);
-  // загружаем первые 10 документов
+  const [loadedDocs, setLoadedDocs] = useState(response);
+
   useEffect(() => {
     // console.log("загружаем первые 10 документов");
 
@@ -81,7 +83,7 @@ export default function SearchResult(props: IpropsDataform) {
     }
   }, [scanData]);
 
-  // загружаем следующую 10ку документов
+
   useEffect(() => {
     // console.log("загружаем следующую 10ку документов");
     if (request.ids.length) {
@@ -91,7 +93,6 @@ export default function SearchResult(props: IpropsDataform) {
 
   useEffect(() => {
     // console.log("дорисовываем документы");
-
     if (docsData) {
       loadedDocs.length
         ? setLoadedDocs(loadedDocs.concat(docsData))
@@ -100,15 +101,38 @@ export default function SearchResult(props: IpropsDataform) {
   }, [docsData]);
 
   const buttonDisable = () =>
-    docsFindedCount == loadedDocs.length ? { display: "none" } : undefined;
+    docsFoundCount == loadedDocs.length ? { display: "none" } : undefined;
 
+  const example: IHistogramsResponse = {
+    data: [{
+      data: [{
+        date: "2020-11-01T03:00:00+03:00",
+        value: 8
+      }, {
+        date: "2020-06-01T03:00:00+03:00",
+        "value": 6
+      }],
+      "histogramType": "totalDocuments"
+    }, {
+      "data": [{
+        "date": "2020-11-01T03:00:00+03:00",
+        "value": 0
+      }, {
+        "date": "2020-06-01T03:00:00+03:00",
+        "value": 1
+      }],
+      "histogramType": "riskFactors"
+    }]
+  }
+
+  // console.log(example)
   return (
     <>
       <div className={styles.result}>
         <div className={styles.result__top}></div>
         <div className={styles.top__content}>
           <div className={styles.content__text}>
-            <h1> Ищем. Скоро будут результы</h1>
+            <h1> Ищем. Скоро будут результаты</h1>
             <br />
             <p>
               Поиск может занять некоторое время, просим сохранять терпение.
@@ -126,7 +150,7 @@ export default function SearchResult(props: IpropsDataform) {
           <div className={styles.summary__frame}>
             <div className={styles.frame__background}>
               {histogramsData ? (
-                <Carousel data={histogramsData.data} />
+                <Carousel data={example.data} />
               ) : (
                 <div className={styles.loading}>
                   <img src={spinnerIco} alt='' />
@@ -141,7 +165,7 @@ export default function SearchResult(props: IpropsDataform) {
             objectSuccess &&
             !loadedDocs.length &&
             !docsLoading && (
-              <h1>Извените, по вашему запросу ничего не найдено</h1>
+              <h1>Извините, по вашему запросу ничего не найдено</h1>
             )}
           <div className={styles.docs_list__wrapper}>
             {loadedDocs && (

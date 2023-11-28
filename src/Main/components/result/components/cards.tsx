@@ -1,10 +1,10 @@
 import style from "./carousel.module.scss";
 import rectangle from "../../../../assets/Rectangle 36.svg";
-import { Icard } from "./carousel";
+import { ICard } from "./carousel";
 import { FC } from "react";
 
 interface IProps {
-  card: Icard;
+  card: ICard;
 }
 
 const Card: FC<IProps> = ({ card }) => {

@@ -2,24 +2,24 @@ import { useState } from "react";
 import Card from "./cards";
 import styles from "./carousel.module.scss";
 import icon from "../../../../assets/icons8-шеврон-вправо-90 1.svg";
-import { IhistogramsResponce } from "../../../../api/histograms_interface";
-import { FC } from "react";
+import { IHistogram } from "../../../../api/histograms_interface";
 
-export interface Icard {
+export interface ICard {
   period: string;
   totalDocuments: number | null;
   riskFactors: number | null;
 }
-interface Idata {
-  data: IhistogramsResponce[];
+
+interface IProps {
+    data: IHistogram[]
 }
 
-const Carousel: FC<Idata> = ({ data }) => {
+function Carousel ({data}:IProps ){
   let list: number[] = [];
-  let carouselList: Icard[] = [];
+  const carouselList: ICard[] = [];
   // console.log(data);
 
-  let monthArray = [
+ const monthArray = [
     "Январь",
     "Февраль",
     "Март",
@@ -35,10 +35,8 @@ const Carousel: FC<Idata> = ({ data }) => {
   ];
 
   if (data.length) {
-    // console.log(data.length);
-
-    for (let i in data[0].data) {
-      let card: Icard = {
+    for (const i in data[0].data) {
+      const card: ICard = {
         period: data[0].data[i].date,
         totalDocuments: data[0].data[i].value,
         riskFactors: data[1].data[1].value,
@@ -46,7 +44,7 @@ const Carousel: FC<Idata> = ({ data }) => {
       carouselList.push(card);
     }
   }
-
+    // console.log(carouselList)
   if (data.length) {
     // сортируем наш список по дате
     carouselList.sort((a, b) => {
@@ -61,9 +59,9 @@ const Carousel: FC<Idata> = ({ data }) => {
   }
 
   // добавляем пустые карточки, если их не хватает
-  if (carouselList.length <= 9) {
-    for (let i = 0; i <= 9 - carouselList.length; i++) {
-      let card: Icard = {
+  if (carouselList.length < 8) {
+    for (let i = 0; i < 8 - data[0].data.length; i++) {
+      const card: ICard = {
         period: "",
         totalDocuments: null,
         riskFactors: null,
@@ -73,36 +71,34 @@ const Carousel: FC<Idata> = ({ data }) => {
   }
   // console.log(carouselList);
 
-  for (let i in carouselList) {
+  for (const i in carouselList) {
     list.push(Number(i));
   }
 
   const [indexes, setIndexes] = useState(list);
 
-  function prevCard() {
+  function turnCard(set: "+"|"-") {
     const newList: number[] = [];
+
+    if (set === "-"){
     indexes.map((value, index) => {
       value--;
       value < 0
         ? (newList[index] = carouselList.length - 1)
         : (newList[index] = value);
     });
-    setIndexes(newList);
-  }
 
-  function nextCard() {
-    const newList: number[] = [];
-    indexes.map((value, index) => {
-      value++;
-      value > indexes.length - 1
-        ? (newList[index] = 0)
-        : (newList[index] = value);
-    });
-    setIndexes(newList);
-  }
+  } else if (set === "+"){    indexes.map((value, index) => {
+        value++;
+        value > indexes.length - 1
+            ? (newList[index] = 0)
+            : (newList[index] = value);
+    })}
+    setIndexes(newList)}
+
   return (
     <div className={styles.carousel}>
-      <button className={styles.button_left} onClick={prevCard}>
+      <button className={styles.button_left} onClick={() =>turnCard('-')}>
         <img src={icon} alt='prev' />
       </button>
       <div className={styles.carousel__legenda}>
@@ -124,11 +120,11 @@ const Carousel: FC<Idata> = ({ data }) => {
           </>
         ) : null}
       </div>
-      <button className={styles.button_right} onClick={nextCard}>
+      <button className={styles.button_right} onClick={() =>turnCard('+')}>
         <img src={icon} alt='next' />
       </button>
     </div>
   );
-};
+}
 
 export default Carousel;

@@ -20,11 +20,11 @@
 .tariffs {
   margin-top: 1rem;
   margin-bottom: 7rem;
-  height: 41.5rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   h2 {
-    font-family: Ferry;
+    font-family: Ferry, sans-serif;
     font-size: 2.8125rem;
     font-style: normal;
     font-weight: 900;
@@ -149,18 +149,18 @@
     }
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .tariffs {
     margin: 0;
     align-items: center;
     height: auto;
-    flex-direction: column;
+    //flex-direction: column;
     h2 {
       font-size: 1.75rem;
     }
     .cards {
       margin: 2rem 0;
-      flex-direction: column;
+      //flex-direction: column;
       .card {
         width: 25rem;
         margin: 1.3rem 0;

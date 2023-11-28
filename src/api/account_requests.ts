@@ -8,30 +8,36 @@ interface ILoginData {
   password: string | null;
 }
 interface IAuthProvider {
-  signin(loginData: ILoginData): Promise<void>;
-  signout(): Promise<void>;
+  signIn(loginData: ILoginData): Promise<void>;
+  signOut(): Promise<void>;
+}
+
+interface IResponse {
+  data: {
+    accessToken: string
+    expire: string
+  }
 }
 
 export const authProvider: IAuthProvider = {
-  async signin(loginData) {
-    await axios.post(mainURL + loginUrl, loginData).then((request) => {
+  async signIn(loginData) {
+    await axios.post(mainURL + loginUrl, loginData).then((request:IResponse) => {
       localStorage.setItem("accessToken", request.data.accessToken);
       localStorage.setItem("expire", request.data.expire);
       localStorage.setItem("user", loginData.login as string);
     });
   },
-  async signout() {
+  async signOut() {
     localStorage.clear();
   },
 };
 
 export default async function loginAction({ request }: LoaderFunctionArgs) {
-  let formData = await request.formData();
-  console.log(request);
+  const formData = await request.formData();
+  // console.log(request);
+  // console.log(formData);
 
-  console.log(formData);
-
-  let loginData: ILoginData = {
+  const loginData: ILoginData = {
     login: "",
     password: "",
   };
@@ -41,8 +47,10 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
 
   // Sign in and redirect to the proper destination if successful.
 
+
+
   try {
-    await authProvider.signin(loginData);
+    await authProvider.signIn(loginData);
   } catch (error) {
     // console.log(error);
     if (error.response.data.message) {
@@ -50,7 +58,7 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
     }
     return { error: error.message };
   }
-  let redirectTo = formData.get("redirectTo") as string | null;
+  const redirectTo = formData.get("redirectTo") as string | null;
   console.log(redirectTo);
 
   return redirectDocument(redirectTo || "/");
@@ -58,11 +66,11 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
 
 export async function AccountInfo() {
   const token = localStorage.getItem("accessToken");
-  const info = await axios
+  return await axios
     .get(mainURL + accountInfo, {
       headers: {
-        Accept: "aplication/json",
-        "Content-Type": "aplication/json",
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     })
@@ -72,5 +80,4 @@ export async function AccountInfo() {
     .catch(function (error) {
       console.log(error);
     });
-  return info;
 }

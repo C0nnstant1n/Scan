@@ -1,18 +1,18 @@
-interface Icompany {
+interface ICompany {
   type: string;
   sparkId: number | null;
   entityId: number | null;
   inn: number | null;
-  maxFullness: Boolean;
-  inBusinessNews: Boolean;
+  maxFullness: boolean;
+  inBusinessNews: boolean;
 }
 
-interface Isearch {
+interface ISearch {
   targetSearchEntitiesContext: {
-    targetSearchEntities: Icompany[];
-    onlyMainRole: Boolean;
+    targetSearchEntities: ICompany[];
+    onlyMainRole: boolean;
     tonality: string;
-    onlyWithRiskFactors: Boolean;
+    onlyWithRiskFactors: boolean;
     riskFactors: {
       and: [];
       or: [];
@@ -31,12 +31,12 @@ interface Isearch {
   };
 }
 
-interface Ihistograms {
+interface IHistograms {
   issueDateInterval: {
     startDate: string;
     endDate: string;
   };
-  searchContext: Isearch;
+  searchContext: ISearch;
   searchArea: {
     includedSources: [];
     excludedSources: [];
@@ -44,9 +44,9 @@ interface Ihistograms {
     excludedSourceGroups: [];
   };
   attributeFilters: {
-    excludeTechNews: Boolean;
-    excludeAnnouncements: Boolean;
-    excludeDigests: Boolean;
+    excludeTechNews: boolean;
+    excludeAnnouncements: boolean;
+    excludeDigests: boolean;
   };
   similarMode: string;
   limit: number;
@@ -56,7 +56,21 @@ interface Ihistograms {
   histogramTypes: string[];
 }
 
-export let histograms: Ihistograms = {
+interface IDataItem {
+  date: string;
+  value: number;
+}
+
+interface IHistogram {
+  data: IDataItem[];
+  histogramType: string;
+}
+
+interface IHistogramsResponse {
+  data: IHistogram[];
+}
+
+export const histograms: IHistograms = {
   issueDateInterval: {
     startDate: "2019-01-01T00:00:00+03:00",
     endDate: "2022-08-31T23:59:59+03:00",
@@ -112,18 +126,7 @@ export let histograms: Ihistograms = {
   histogramTypes: ["totalDocuments", "riskFactors"],
 };
 
-export type { Ihistograms, Icompany, Isearch };
 
-interface IDataItem {
-  date: string;
-  value: number;
-}
 
-interface IHistogram {
-  data: IDataItem[];
-  histogramType: string;
-}
 
-export interface IhistogramsResponce {
-  data: IHistogram[];
-}
+export type { IHistograms, ICompany, ISearch, IHistogramsResponse, IHistogram };

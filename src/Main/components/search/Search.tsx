@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from "react-router-dom";
 import { redirect, useActionData } from "react-router-dom";
 import SearchResult from "../result/Result.js";
-import { Ihistograms } from "../../../api/histograms_interface.js";
+import { IHistograms } from "../../../api/histograms_interface.js";
 import SearchForm from "./SearchForm.js";
 import styles from "./search.module.scss";
 import document_img from "../../../assets/Document.svg";
@@ -28,7 +28,7 @@ export function protectedLoader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Search() {
-  let formData = useActionData() as Ihistograms;
+  let formData = useActionData() as IHistograms;
   if (formData) {
     return <SearchResult formData={formData} />;
   }

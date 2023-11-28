@@ -1,8 +1,8 @@
 import type { LoaderFunctionArgs } from "react-router-dom";
-import { Icompany, histograms } from "../../../../api/histograms_interface";
+import { ICompany, histograms } from "../../../../api/histograms_interface";
 
 export default async function searchAction({ request }: LoaderFunctionArgs) {
-  let formData = await request.formData();
+  const formData = await request.formData();
 
   histograms.histogramTypes = ["totalDocuments", "riskFactors"];
   histograms.issueDateInterval.startDate = new Date(
@@ -16,7 +16,7 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
 
   const inn = formData.get("inn") as string;
 
-  let company: Icompany = {
+  const company: ICompany = {
     type: "company",
     sparkId: null,
     entityId: null,
@@ -24,7 +24,7 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
     maxFullness: false,
     inBusinessNews: false,
   };
-  let search = histograms.searchContext.targetSearchEntitiesContext;
+  const search = histograms.searchContext.targetSearchEntitiesContext;
 
   company.inn = inn ? Number(inn.replace(/\D/g, "")) : null;
   company.maxFullness = formData.get("maxFullness") ? true : false;

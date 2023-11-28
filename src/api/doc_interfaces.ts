@@ -2,7 +2,7 @@ interface IDocRequest {
   ids: string[];
 }
 
-interface Isource {
+interface ISource {
   id: number;
   groupId: number;
   name: string;
@@ -10,11 +10,11 @@ interface Isource {
   levelId: number;
 }
 
-interface Iauthor {
+interface IAuthor {
   name: string;
 }
 
-interface Ititle {
+interface ITitle {
   text: string;
   markup: string;
 }
@@ -41,7 +41,7 @@ interface ICompanies {
   isMainRole: boolean;
 }
 
-interface Ipeople {
+interface IPeople {
   rotatedName: string;
   tags: string[];
   isSpeechAuthor: boolean;
@@ -51,7 +51,7 @@ interface Ipeople {
   isMainRole: boolean;
 }
 
-interface Ithemes {
+interface IThemes {
   localId: number;
   name: string;
   entityId: number;
@@ -62,7 +62,7 @@ interface Ithemes {
   };
 }
 
-interface Ilocatios {
+interface ILocations {
   code: {
     countryCode: string;
     regionCode: string;
@@ -75,12 +75,12 @@ interface Ilocatios {
 
 interface IEntities {
   companies: ICompanies[];
-  people: Ipeople[];
-  themes: Ithemes[];
-  locations: Ilocatios[];
+  people: IPeople[];
+  themes: IThemes[];
+  locations: ILocations[];
 }
 
-interface Iattributes {
+interface IAttributes {
   isTechNews: boolean;
   isAnnouncement: boolean;
   isDigest: boolean;
@@ -100,15 +100,15 @@ interface IDocResponse {
     version: number;
     issueDate: string;
     url: string;
-    author: Iauthor;
-    source: Isource;
+    author: IAuthor;
+    source: ISource;
     dedupClusterId: string;
-    title: Ititle;
+    title: ITitle;
     content: {
       markup: string;
     };
     entities: IEntities;
-    attributes: Iattributes;
+    attributes: IAttributes;
     language: string;
   };
   fail: {
@@ -117,6 +117,5 @@ interface IDocResponse {
     errorMessage: string;
   };
 }
-[];
 
 export type { IDocRequest, IDocResponse };

@@ -4,10 +4,10 @@ footer {
   width: 100%;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-gap: 1vw;
   background-color: $main-color-1;
-  grid-template-areas: "logo space-1 space-2 space-3 contacts";
+  grid-template-areas: "logo space-2 contacts";
   // justify-items: center;
   align-items: center;
 
