@@ -2,9 +2,9 @@ import type { LoaderFunctionArgs } from "react-router-dom";
 import { histograms } from "./histograms_interface";
 
 export default async function searchAction({ request }: LoaderFunctionArgs) {
-  let formData = await request.formData();
+  const formData = await request.formData();
   //   const Data = formData.get("inn") as string | null;
-  console.log(formData.get("redirectTo"));
+  // console.log(formData.get("redirectTo"));
 
   histograms.issueDateInterval.startDate = new Date(
     formData.get("startDate") as string
@@ -17,34 +17,36 @@ export default async function searchAction({ request }: LoaderFunctionArgs) {
 
   const inn = formData.get("inn") as string;
 
+  const company = {
+    inn: "",
+    maxFullness: false,
+    inBusinessNews: false,
+    entityId: null,
+    type: "company",
+    sparkId: null
+  }
+
+
   company.inn = inn ? inn.replace(/\D/g, "") : "";
-  company.maxFullness = formData.get("maxFullness") ? true : false;
-  company.inBusinessNews = formData.get("inBusinessNews") ? true : null;
-  histograms.attributeFilters.excludeAnnouncements = formData.get(
+  company.maxFullness = !!formData.get("maxFullness");
+  company.inBusinessNews = !!formData.get("inBusinessNews");
+
+  histograms.searchContext.targetSearchEntitiesContext.targetSearchEntities.push(company)
+
+  histograms.attributeFilters.excludeAnnouncements = !formData.get(
     "excludeAnnouncements"
   )
-    ? false
-    : true;
+  histograms.attributeFilters.excludeDigests = !formData.get("excludeDigests")
 
-  histograms.attributeFilters.excludeDigests = formData.get("excludeDigests")
-    ? false
-    : true;
+  histograms.attributeFilters.excludeTechNews = !formData.get("excludeTechNews")
 
-  histograms.attributeFilters.excludeTechNews = formData.get("excludeTechNews")
-    ? false
-    : true;
+  histograms.searchContext.targetSearchEntitiesContext.onlyMainRole = !!formData.get("onlyMainRole")
 
-  search.targetSearchEntitiesContext.onlyMainRole = formData.get("onlyMainRole")
-    ? true
-    : false;
-
-  search.targetSearchEntitiesContext.onlyWithRiskFactors = formData.get(
+  histograms.searchContext.targetSearchEntitiesContext.onlyWithRiskFactors = !!formData.get(
     "onlyWithRiskFactors"
   )
-    ? true
-    : false;
 
-  search.targetSearchEntitiesContext.tonality = formData.get(
+  histograms.searchContext.targetSearchEntitiesContext.tonality = formData.get(
     "tonality"
   ) as string;
 

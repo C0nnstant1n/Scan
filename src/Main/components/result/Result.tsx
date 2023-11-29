@@ -1,5 +1,5 @@
 import { scanApi } from "../../../redux/HistogramSevice";
-import {IHistograms, IHistogramsResponse} from "../../../api/histograms_interface";
+import {IHistograms} from "../../../api/histograms_interface";
 import { useEffect } from "react";
 import Carousel from "./components/carousel";
 import { IDocRequest, IDocResponse } from "../../../api/doc_interfaces";
@@ -17,7 +17,7 @@ const count = 0;
 const response: IDocResponse[] = [];
 
 export default function SearchResult(props: IPropsDataForm) {
-  // console.log(props);
+  console.log(props);
 
   const [
     searchHistograms,
@@ -103,27 +103,27 @@ export default function SearchResult(props: IPropsDataForm) {
   const buttonDisable = () =>
     docsFoundCount == loadedDocs.length ? { display: "none" } : undefined;
 
-  const example: IHistogramsResponse = {
-    data: [{
-      data: [{
-        date: "2020-11-01T03:00:00+03:00",
-        value: 8
-      }, {
-        date: "2020-06-01T03:00:00+03:00",
-        "value": 6
-      }],
-      "histogramType": "totalDocuments"
-    }, {
-      "data": [{
-        "date": "2020-11-01T03:00:00+03:00",
-        "value": 0
-      }, {
-        "date": "2020-06-01T03:00:00+03:00",
-        "value": 1
-      }],
-      "histogramType": "riskFactors"
-    }]
-  }
+  // const example: IHistogramsResponse = {
+  //   data: [{
+  //     data: [{
+  //       date: "2020-11-01T03:00:00+03:00",
+  //       value: 8
+  //     }, {
+  //       date: "2020-06-01T03:00:00+03:00",
+  //       "value": 6
+  //     }],
+  //     "histogramType": "totalDocuments"
+  //   }, {
+  //     "data": [{
+  //       "date": "2020-11-01T03:00:00+03:00",
+  //       "value": 0
+  //     }, {
+  //       "date": "2020-06-01T03:00:00+03:00",
+  //       "value": 1
+  //     }],
+  //     "histogramType": "riskFactors"
+  //   }]
+  // }
 
   // console.log(example)
   return (
@@ -150,7 +150,7 @@ export default function SearchResult(props: IPropsDataForm) {
           <div className={styles.summary__frame}>
             <div className={styles.frame__background}>
               {histogramsData ? (
-                <Carousel data={example.data} />
+                <Carousel data={histogramsData.data} />
               ) : (
                 <div className={styles.loading}>
                   <img src={spinnerIco} alt='' />

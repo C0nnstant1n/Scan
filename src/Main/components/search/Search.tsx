@@ -13,10 +13,10 @@ export function protectedLoader({ request }: LoaderFunctionArgs) {
   // them to `/login` with a `from` parameter that allows login to redirect back
   // to this page upon successful authentication
   // console.log(request);
-  const isAuthorized = localStorage.getItem("user") ? true : false;
+  const isAuthorized = !!localStorage.getItem("user");
 
   if (!isAuthorized) {
-    let params = new URLSearchParams();
+    const params = new URLSearchParams();
     params.set("from", new URL(request.url).pathname);
     // console.log(params.toString());
     // если пользователь не авторизован, можно отправить его на страницу входа
@@ -28,7 +28,7 @@ export function protectedLoader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Search() {
-  let formData = useActionData() as IHistograms;
+  const formData = useActionData() as IHistograms;
   if (formData) {
     return <SearchResult formData={formData} />;
   }

@@ -2,7 +2,7 @@ interface ICompany {
   type: string;
   sparkId: number | null;
   entityId: number | null;
-  inn: number | null;
+  inn: string;
   maxFullness: boolean;
   inBusinessNews: boolean;
 }
@@ -82,7 +82,7 @@ export const histograms: IHistograms = {
           type: "company",
           sparkId: null,
           entityId: null,
-          inn: 7710137066,
+          inn: "7710137066",
           maxFullness: true,
           inBusinessNews: false,
         },

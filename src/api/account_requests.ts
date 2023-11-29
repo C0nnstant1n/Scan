@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import { mainURL, loginUrl, accountInfo } from "./vars";
 import { redirectDocument } from "react-router-dom";
 import type { LoaderFunctionArgs } from "react-router-dom";
@@ -22,6 +22,7 @@ interface IResponse {
 export const authProvider: IAuthProvider = {
   async signIn(loginData) {
     await axios.post(mainURL + loginUrl, loginData).then((request:IResponse) => {
+      console.log(request)
       localStorage.setItem("accessToken", request.data.accessToken);
       localStorage.setItem("expire", request.data.expire);
       localStorage.setItem("user", loginData.login as string);
@@ -48,15 +49,18 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
   // Sign in and redirect to the proper destination if successful.
 
 
+  interface PostErrorType  {
+    message: string;
+  }
 
   try {
     await authProvider.signIn(loginData);
   } catch (error) {
-    // console.log(error);
-    if (error.response.data.message) {
-      return { error: error.response.data.message };
+    const err = error as  AxiosError<PostErrorType>
+    if (err.response && err.response.data) {
+      return { error: err.response.data.message };
     }
-    return { error: error.message };
+    return { error: err.message };
   }
   const redirectTo = formData.get("redirectTo") as string | null;
   console.log(redirectTo);
